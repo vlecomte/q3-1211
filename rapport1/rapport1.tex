@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+
+\usepackage{tabu,enumerate,paralist,chemfig}
+\usepackage{SIunits}
+\usepackage[version=3]{mhchem}
+
+\begin{document}
+
+\begin{center}
+\begin{tabu} to \textwidth {lX[c]r}
+    Groupe 1211 & Rapport~1 & 24 septembre 2014 \\
+    \hline
+\end{tabu}
+\end{center}
+
+\section{Bilan de matière}
+
+Il s'agit de produire de l'ammoniac (\ce{NH3}) à partir de dihydrogène (\ce{H2})
+et de diazote (\ce{N2}).
+Cela donne l'équation pondérée suivante:
+\[\ce{N2 + 3H2 -> 2NH3}\]
+
+On obtient facilement les masses molaires des différents composés à partir
+des masses atomiques de l'hydrogène et de l'azote:
+\[
+    \begin{array}{lcr}
+        M_{\ce{N2}} &=& 28\,\gram\per\mole\\
+        M_{\ce{H2}} &=& 2\,\gram\per\mole\\
+        M_{\ce{NH3}} &=& 17\,\gram\per\mole\\
+    \end{array}
+\]
+
+En un jour, l'unité produit $1000\,\ton$ d'ammoniac.
+Cela correspond à
+\[\frac{1000\,\ton}{28\,\gram\per\mole} = 5.88\,10^7\,\mole\mbox{ de \ce{NH3}}\]
+
+En utilisant les coefficients stœchiométriques, on trouve que les quantités de
+réactifs nécessaires sont:
+\[
+    \begin{array}{lcr}
+        \frac{1}{2} 5.88\,10^7\,\mole &=& 2.94\,10^7\,\mole
+        \mbox{ de \ce{N2}} \\
+        \frac{3}{2}
+    \end{array}
+\]
+
+\end{document}
