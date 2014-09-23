@@ -1,0 +1,19 @@
+# Some temp files of editors
+.*.swp
+*~
+# LaTeX auxiliary files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.toc
+*.gz
+*.bcf
+*.out
+*.run.xml
+*(busy)
+# Random junk
+*.lnk
+# Output pdf, but not images
+*.pdf
+!**/img/*.pdf
