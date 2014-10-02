@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{../latex/mystyle}
+\addbibresource{ref.bib}
 
 \begin{document}
 
@@ -96,6 +97,9 @@ En tenant compte des coefficients stœchiométriques, on obtient:
     + (-22.73\,\joule\per\mole\usk\kelvin) \times 475\,\kelvin \\
     &= -56.91\,\kilo\joule\per\mole \\
 \end{align*}
+en utilisant $C_{p,\mathrm{m}}^\ce{NH3(g)}=??$,
+$C_{P,\mathrm{m}}^\ce{N2(g)}=??$ et $C_{P,\mathrm{m}}^\ce{H2(g)}=??$.
+\cite{atkins}
 
 Quant à $n\ind{t,\ce{NH3}}$ il s'agit simplement du
 nombre de moles de \ce{NH3} produites par jour,
@@ -119,7 +123,8 @@ différence de température:
 \begin{equation*}
     \Delta H\ind{m,eau} = C_{P,\mathrm{m}}^\ce{H2O(l)} \times \Delta T\ind{eau}
 \end{equation*}
-avec $C_{P,\mathrm{m}}^\ce{H2O(l)} = 75.29\,\joule\per\mole\usk\kelvin$ et
+avec $C_{P,\mathrm{m}}^\ce{H2O(l)} = 75.29\,\joule\per\mole\usk\kelvin$
+\cite{atkins} et
 $\Delta T\ind{eau} = 90\,\degreecelsius-25\,\degreecelsius = 65\,\kelvin$
 
 Et le débit de matière est le quotient du débit en volume par le volume molaire
@@ -162,5 +167,7 @@ En introduisant les valeurs chiffrées, cela donne:
 
 En conclusion, le refroidissement du réacteur nécessitera un débit d'eau
 d'environ 142 litres par seconde.
+
+\printbibliography[heading=bibintoc]
 
 \end{document}
