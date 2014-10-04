@@ -237,6 +237,7 @@ voir sources \cite{process-patent}, \cite{epa} et \cite{contaminants}.
         \node [reaction, below of=cryo, node distance=9em] (condens) {
             Condensation de l'eau
         };
+        \node [below of=condens, node distance=5em] (exitwater) {};
         \node [reaction, left of=condens] (synthesis) {
             Synthèse de l'ammoniac \\
             \footnotesize{
@@ -272,6 +273,9 @@ voir sources \cite{process-patent}, \cite{epa} et \cite{contaminants}.
             \ce{N2} (excès)
         }
         (exitcryo);
+        \path [thinflow] (condens) --
+        node [flowing, left]{\ce{H2O}}
+        (exitwater);
 
 
         \path [flow] (primary) --
