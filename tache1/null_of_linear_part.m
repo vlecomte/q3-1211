@@ -1,6 +1,6 @@
-function n = null_of_linear_part()
 % Finds the linear space of flow values that satisfy all linear relations
 % in the complex process of ammonia production.
+function n = null_of_linear_part()
 
 % A describes the system in terms of
 %   - in1, in2, in3: the inputs of CH4, H2O and air;
