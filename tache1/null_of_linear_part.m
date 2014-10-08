@@ -1,3 +1,4 @@
+
 % Finds the linear space of flow values that satisfy all linear relations
 % in the complex process of ammonia production.
 function n = null_of_linear_part()
@@ -20,7 +21,7 @@ A = [
     0 0 .21 0 0 0 0 0 0 -1 0 0;
     0 0 .78 0 0 0 0 0 0 0 0 -1;
     0 0 .01 0 0 -1 0 0 0 0 0 0;
-    0 0 0 0 0 0 -1 0 0 0 0 1;
+    0 0 0 0 0 0 -1 0 0 0 0 2;
     ];
 
 % Finds one (fairly simple) base for the space of
