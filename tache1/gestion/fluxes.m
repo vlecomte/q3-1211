@@ -33,7 +33,7 @@ dHf2  =   dHf_h2 + dHf_co2 - dHf_co  - dHf_h2o;
 dS01  =  3*S0_h2 +  S0_co  -  S0_ch4 - S0_h2o ;
 dS02  =    S0_h2 +  S0_co2 -  S0_co  - S0_h2o ;
 
-% Enthalpy and entropy net changes
+% Adapting enthalpy and entropy to temperature
 dH1 = delta_enthalpy(dHf1, dCpm1, Tref, T);
 dH2 = delta_enthalpy(dHf2, dCpm2, Tref, T);
 dS1 = delta_entropy (dS01, dCpm1, Tref, T);
@@ -43,7 +43,7 @@ dS2 = delta_entropy (dS02, dCpm2, Tref, T);
 K1 = exp(-(dH1-T*dS1)/R/T);
 K2 = exp(-(dH2-T*dS2)/R/T);
 
-% Adapting with pressure
+% Adapting to pressure
 Kp1 = K1/(ptot/pref)^2;
 Kp2 = K2;
 
