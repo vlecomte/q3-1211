@@ -3,15 +3,15 @@ function fluxes = fluxes(T, nh3)
 % Constants
 Tref = 298.15;
 R = 8.3144621;
-pref = 1*10^5;
-ptot = 28*10^5;
+pref = 1e5;
+ptot = 28e5;
 
 % Chemical properties
-dHf_ch4 = -74.81*10^3;
+dHf_ch4 = -74.81e3;
 dHf_h2 = 0;
-dHf_co = -110.53*10^3;
-dHf_co2 = -393.51*10^3;
-dHf_h2o = -241.82*10^3;
+dHf_co = -110.53e3;
+dHf_co2 = -393.51e3;
+dHf_h2o = -241.82e3;
 
 S0_ch4 = 186.26;
 S0_h2 = 130.68;
@@ -19,7 +19,7 @@ S0_co = 197.67;
 S0_co2 = 213.74;
 S0_h2o = 188.83;
 
-f = [1, 10^(-3), 10^(-6)]';
+f = [1, 1e-3, 1e-6]';
 Cpm_ch4 = [14.23 75.3 -18.00]' .* f;
 Cpm_h2 = [29.30 -0.84 2.09]' .* f;
 Cpm_co = [27.62 5.02 0]' .* f;
