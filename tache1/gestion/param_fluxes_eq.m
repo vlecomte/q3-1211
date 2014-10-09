@@ -1,6 +1,6 @@
 % Similar to null_of_linear_part, but gives the flow values at the output
 % of the primary reformer, where the equilibrium happens.
-function eq_null = null_at_equilibrium()
+function eq_null = param_fluxes_eq()
 
 % Represents the flows of chemicals coming out of the primary reformer
 % for CH4, H2, CO, CO2 and H2O as lines, in terms of the variables from
@@ -34,7 +34,7 @@ eq_components = [
 % - since the amount of CO2 must be positive, the second coefficient has to
 %   be at most 1.1538 times as big as the third.
 % Note that there may be better bounds, as this is not a complete analysis.
-eq_null = eq_components * null_of_linear_part();
+eq_null = eq_components * param_fluxes();
 
 end
 
