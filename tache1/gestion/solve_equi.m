@@ -15,10 +15,14 @@ a = solve(n_eq(2)*n_eq(4) / (n_eq(3)*n_eq(5)) == Kp2, a);
 
 % Solves equilibrium of beta for b
 n_eq = param_eq * [a;b;c];
-b = solve(n_eq(2)^3*n_eq(3) / (n_eq(1)*n_eq(5)*sum(n_eq)^2) == Kp1, n_eq(3) >= 0);
+b = solve(n_eq(2)^3*n_eq(3) / (n_eq(1)*n_eq(5)*sum(n_eq)^2) == Kp1, ...
+    n_eq(3) >= 0);
 
+% Converting to doubles
+b = double(b);
 a = eval(a);
+c = double(c);
 
-abc = [double(a);double(b);double(c)];
+abc = [a;b;c];
 
 end
