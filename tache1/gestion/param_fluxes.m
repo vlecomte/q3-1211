@@ -1,4 +1,5 @@
 
+
 % Finds the linear space of flow values that satisfy all linear relations
 % in the complex process of ammonia production.
 function n = param_fluxes()
@@ -15,9 +16,9 @@ function n = param_fluxes()
 A = [
     1 0 0 0 0 0 0 -1 0 -2 0 0;
     0 1 0 -1 0 0 0 -1 -1 0 -1 0;
-    0 0 0 0 0 0 0 3 1 1 1 -3;
+    0 0 0 0 0 0 0 3 1 4 1 -3;
     0 0 0 0 0 0 0 1 -1 2 -1 0;
-    0 0 0 0 1 0 0 0 -1 0 -1 0;
+    0 0 0 0 -1 0 0 0 1 0 1 0;
     0 0 .21 0 0 0 0 0 0 -1 0 0;
     0 0 .78 0 0 0 0 0 0 0 0 -1;
     0 0 .01 0 0 -1 0 0 0 0 0 0;
