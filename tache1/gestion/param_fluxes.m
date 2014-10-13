@@ -1,13 +1,11 @@
-
-
-% Finds the linear space of flow values that satisfy all linear relations
-% in the complex process of ammonia production.
+% Solves the matter conservation equations, and returns the solution in
+% parametric form.
 function n = param_fluxes()
 
 % A describes the system in terms of
 %   - in1, in2, in3: the inputs of CH4, H2O and air;
 %   - out1, out2, out3, out4: the outputs of H2O, CO2, Ar and NH3;
-%   - alpha, beta, gamma, delta, epsilon;
+%   - alpha, beta, gamma, delta, epsilon: the degrees of advancement;
 % as the columns, in that order.
 %
 % The lines represent matter conservation for
@@ -25,14 +23,17 @@ A = [
     0 0 0 0 0 0 -1 0 0 0 0 2;
     ];
 
-% Finds one (fairly simple) base for the space of
-%   {x | A*x = 0}
-% The three resulting vectors can be interpreted as follows:
-% - you can add water at in2, as long as you drain as much at out1;
-% - since the reactions beta and delta are equivalent,
-%   you can reduce the work done by beta and increase that made by delta;
-% - when producing one mole of NH3, most other necessary quantities can
-%   be deduced.
+% Solves the above homogeneous system of equations.
+% As there are 12 variables and 9 equations, the solution is of
+% the form a*v1 + b*v2 + c*v3 with a,b,c flux parameters in [mol/s].
+% n is the matrix [v1 v2 v3].
 n = null(A, 'r');
+
+% The three resulting vectors can be interpreted as follows:
+% - v1: you can add water at in2, as long as you drain as much at out1;
+% - v2: since the reactions beta and delta are equivalent,
+%   you can reduce the work done by beta and increase that made by delta;
+% - v3: when producing one mole of NH3, most other necessary quantities can
+%   be deduced.
 
 end
