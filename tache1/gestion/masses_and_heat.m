@@ -1,5 +1,6 @@
-% Computes mass flow rates for the reactor and the oven
-function [m_reac, m_oven] = masses(T, m_nh3)
+% Computes mass flow rates for the reactor and the oven,
+% and heat brought to the reactions.
+function [m_reac, m_oven, q_reac] = masses_and_heat(T, m_nh3)
 
 % Molar masses
 M_ar  = 40e-3;
@@ -28,5 +29,9 @@ m_oven.ch4 = n_oven(1) * M_ch4;
 m_oven.o2  = n_oven(2) * M_o2 ;
 m_oven.co2 = n_oven(3) * M_co2;
 m_oven.h2o = n_oven(4) * M_h2o;
+
+% Heat brought to the five reactions
+q_reac = delta_h_reac(n_reac(8), n_reac(9), n_reac(10), n_reac(11), ...
+    n_reac(12));
 
 end
