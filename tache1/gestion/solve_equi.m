@@ -1,7 +1,7 @@
 % Imposes an output of NH3 and solves the equilibrium equations in order to
 % find the three parameters that multiply the columns of param_fluxes()
 % and thus calculate the final expression of the fluxes.
-function abc = solve_equi(Kp1, Kp2, out4)
+function [abc] = solve_equi(Kp1, Kp2, out4)
 
 % The unknown flux coefficients
 syms a b c real;

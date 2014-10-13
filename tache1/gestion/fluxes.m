@@ -2,7 +2,7 @@ function [fluxes_reac,fluxes_oven] = fluxes(T, n_nh3)
 
 % Chemical constants
 R = 8.3144621;
-pref =  1e5;
+pref = 1e5;
 
 % Stating hypotheses
 ptot = 28e5;

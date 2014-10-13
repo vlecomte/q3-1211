@@ -1,6 +1,6 @@
 % Similar to null_of_linear_part, but gives the flux values at the output
 % of the primary reformer, where the equilibrium is reached.
-function eq_null = param_fluxes_eq()
+function [eq_null] = param_fluxes_eq()
 
 % Represents the fluxes of chemicals coming out of the primary reformer
 % for CH4, H2, CO, CO2 and H2O as lines, in terms of the variables from

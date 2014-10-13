@@ -1,6 +1,6 @@
 % Solves the matter conservation equations, and returns the solution in
 % parametric form.
-function n = param_fluxes()
+function [n] = param_fluxes()
 
 % A describes the system in terms of
 %   - in1, in2, in3: the inputs of CH4, H2O and air;
