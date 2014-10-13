@@ -1,8 +1,8 @@
 % Solves the matter conservation equations, and returns the solution in
 % parametric form.
-function [n] = param_fluxes()
+function [n] = param_moles()
 
-% A describes the system in terms of
+% A describes the system in terms of the mole flow rates:
 %   - in1, in2, in3: the inputs of CH4, H2O and air;
 %   - out1, out2, out3, out4: the outputs of H2O, CO2, Ar and NH3;
 %   - alpha, beta, gamma, delta, epsilon: the degrees of advancement;
@@ -31,9 +31,9 @@ n = null(A, 'r');
 
 % The three resulting vectors can be interpreted as follows:
 % - v1: you can add water at in2, as long as you drain as much at out1;
-% - v2: since the reactions beta and delta are equivalent,
-%   you can reduce the work done by beta and increase that made by delta;
+% - v2: since the reactions beta and delta are equivalent, you can reduce
+%       the work done by beta and increase that made by delta;
 % - v3: when producing one mole of NH3, most other necessary quantities can
-%   be deduced.
+%       be deduced.
 
 end
