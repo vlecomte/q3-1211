@@ -1,6 +1,6 @@
 % Calculates molar enthalpy and entropy values for the two reactions in the
 % primary reformer. 
-function [dH1,dH2,dS1,dS2] = delta_h_and_s_reformer1(T)
+function [dH1, dH2, dS1, dS2] = delta_h_and_s_reformer1(T)
 
 % This function uses the Shomate coefficients, which describe molar heat
 % capacities, formation enthalpy and entropy as functions of temperature:

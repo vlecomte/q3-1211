@@ -1,4 +1,5 @@
-function [fluxes_reac,fluxes_oven] = fluxes(T, n_nh3)
+% Computes mole fluxes for the reactor and the oven
+function [fluxes_reac, fluxes_oven] = fluxes(T, n_nh3)
 
 % Chemical constants
 R = 8.3144621;
