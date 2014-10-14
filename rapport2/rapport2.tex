@@ -72,7 +72,7 @@ pour un mode opératoire discret.}
 En ce qui concerne les équations, nous pouvons exprimer:
 \begin{itemize}
     \item la conservation de chacune des 9 espèces à travers le procédé:
-        ce qui est apporté ou produit doit égaler ce qui est enlevé ce qui réagit;
+        ce qui est apporté ou produit doit égaler ce qui est enlevé ou ce qui réagit;
     \item le débit de sortie de \ce{NH3}, imposé par l'utilisateur;
     \item les deux relations d'équilibre à la sortie du réacteur de réformage
         primaire.
@@ -98,7 +98,39 @@ sont représentées par des flèches entre les inconnues.
     \label{fig:flows-matter}
 \end{figure}
 
-\subsection{Expression des équations}
+\subsection{Résolution des équations}
+
+La méthode de résolution des équations a été déterminée par le type des équations:
+\begin{itemize}
+    \item les neuf équations de conservation de masses sont linéaires et homogènes;
+    \item l'équation qui imposé la sortie de \ce{NH3} est linéaire et non-homogène;
+    \item les équations d'équilibre ne sont pas linéaires.
+\end{itemize}
+
+Elles sont ici triées dans l'ordre de difficulté croissante.
+Nous avons décidé dans notre programme de les résoudre dans cet ordre:
+\begin{enumerate}
+    \item Les neuf équations linéaires homogènes sont résolues,
+        laissant trois degrés de liberté.
+        On exprime les solutions sous la forme $av_1 + bv_2 + cv_3$
+        où $a$, $b$ et $c$ sont des paramètres de débit inconnus.
+        Cette étape est effectuée par la fonction \texttt{param\textunderscore moles}.
+    \item Ensuite on impose que la sortie de \ce{NH3} soit égale la valeur entrée.
+        Dans notre cas, cela déterminait le paramètre $c$.
+        Ceci est une des étapes de la fonction \texttt{solve\textunderscore equi}.
+    \item Enfin on résout les équations d'équilibre pour trouver les deux derniers
+        paramètres $a$ et $b$. C'est la deuxième partie de la fonction \texttt{solve\textunderscore equi}.
+        Notons que les débits à l'équilibre ont dû être préalablement exprimés en fonction
+        de $a$, $b$ et $c$, ce qui est le rôle \texttt{param\textunderscore moles\textunderscore eq}
+\end{enumerate}
+
+Une fois les paramètres $a$, $b$ et $c$ calculés, nous pouvons déduire tous les débits
+molaires du procédé, et une fois ceux-là obtenus,
+les débits massiques et les chaleurs produites ou absorbées par chacune des réactions.
+C'est le rôle de la fonction \texttt{masses\textunderscore and\textunderscore heat},
+qui prend simplement en paramètre la température en kelvin et le débit en \kilogram\ par jour.
+
+Celle-ci est utilisée directement par l'interface graphique.
 
 \section{Bilan d'énergie}
 
@@ -133,7 +165,7 @@ où $A$, $B$, $C$, $D$, $E$ et $F$ sont des coefficients
 qui dépendent du composé en question et où $t=\frac{T(\kelvin)}{1000}$.
 
 Cette équation donne la différence d'enthalpie entre le composé à la température $T$
-et sa forme élémentaire à un température standard $T\ind{ref} = 298.15\,\kelvin$.
+et sa forme élémentaire à une température standard $T\ind{ref} = 298.15\,\kelvin$.
 
 
 \subsubsection{Réactions reformage primaire}
@@ -246,8 +278,9 @@ la vitesse superficielle typique à l’entrée du réacteur de reformage
 à vapeur de méthane est typiquement de $2\,\meter\per\second$.
 Nous savons que les tubes sont circulaires et leur diamètre est $10\,\centi\meter$.
 
-Nous prenons également pour les besoins du raisonnement qu'à l'endroit concerné
-une pression de $31\,\bbar$ et une température de $1000\,\kelvin$.
+Nous prenons également pour les besoins du raisonnement
+une pression de $31\,\bbar$ et une température de $1000\,\kelvin$
+à l'endroit concerné.
 
 Pour commencer, nous pouvons aisément déduire le débit volumique pour un tube,
 comme le produit de la vitesse $c$, et de la section du tube $A$.
@@ -259,7 +292,7 @@ Nous obtenons:
 
 Ensuite, calculons le débit molaire de \ce{NH3} à la sortie
 à partir du débit massique $\dot{m} = 1500\,\ton\per\jour = 17.36\,\kilogram\per\second$.
-En le divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
+En divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
 on obtient un débit de:
 \begin{equation*}
     \dot{n}\ind{sortie} = \frac{\dot{m}}{M_{\ce{NH3}}}
