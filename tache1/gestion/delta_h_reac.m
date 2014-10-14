@@ -4,6 +4,7 @@
 % reactions have inputs and outputs at 298.15K.
 function [dH] = delta_h_reac(T1, alpha, beta, gamma, delta, epsilon)
 
+% Temperatures for each of the reactions
 Celsius = 273.15;
 T2 = T1;
 T3 = 900 + Celsius;

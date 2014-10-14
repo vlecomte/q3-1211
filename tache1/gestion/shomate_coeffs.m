@@ -1,7 +1,10 @@
+% For an explanation of the Shomate equation or coefficients,
+% see shomate_bases.m
 function [c, h] = shomate_coeffs()
 
 % Coefficients A through G of the Shomate equation.
 % The limit temperature between h2_low and h2_high is 1000K.
+% The limit temperature between co2_low and co2_high is 1200K.
 c.ch4      = [...
     -0.703029 108.4773 -42.52157 5.862788 0.678565 ...
     -76.84376 158.7163];
