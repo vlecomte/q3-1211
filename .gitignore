@@ -16,6 +16,5 @@
 *(busy)
 # Random junk
 *.lnk
-# Output pdf, but not images
-#*.pdf
-#!**/img/*.pdf
+# Compressed folders
+*.zip
