@@ -31,7 +31,7 @@ m_oven.co2 = n_oven(3) * M_co2;
 m_oven.h2o = n_oven(4) * M_h2o;
 
 % Heat brought to the five reactions
-q_reac = delta_h_reac(n_reac(8), n_reac(9), n_reac(10), n_reac(11), ...
+q_reac = delta_h_reac(T, n_reac(8), n_reac(9), n_reac(10), n_reac(11), ...
     n_reac(12));
 
 end
