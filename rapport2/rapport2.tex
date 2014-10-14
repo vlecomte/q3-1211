@@ -103,7 +103,7 @@ sont représentées par des flèches entre les inconnues.
 La méthode de résolution des équations a été déterminée par le type des équations:
 \begin{itemize}
     \item les neuf équations de conservation de masses sont linéaires et homogènes;
-    \item l'équation qui imposé la sortie de \ce{NH3} est linéaire et non-homogène;
+    \item l'équation qui impose la sortie de \ce{NH3} est linéaire et non-homogène;
     \item les équations d'équilibre ne sont pas linéaires.
 \end{itemize}
 
@@ -121,14 +121,14 @@ Nous avons décidé dans notre programme de les résoudre dans cet ordre:
     \item Enfin on résout les équations d'équilibre pour trouver les deux derniers
         paramètres $a$ et $b$. C'est la deuxième partie de la fonction \texttt{solve\textunderscore equi}.
         Notons que les débits à l'équilibre ont dû être préalablement exprimés en fonction
-        de $a$, $b$ et $c$, ce qui est le rôle \texttt{param\textunderscore moles\textunderscore eq}
+        de $a$, $b$ et $c$, ce qui est le rôle de \texttt{param\textunderscore moles\textunderscore eq}.
 \end{enumerate}
 
 Une fois les paramètres $a$, $b$ et $c$ calculés, nous pouvons déduire tous les débits
 molaires du procédé, et une fois ceux-là obtenus,
 les débits massiques et les chaleurs produites ou absorbées par chacune des réactions.
 C'est le rôle de la fonction \texttt{masses\textunderscore and\textunderscore heat},
-qui prend simplement en paramètre la température en kelvin et le débit en \kilogram\ par jour.
+qui prend simplement en paramètre la température en kelvin et le débit en \kilogram\per\second.
 
 Celle-ci est utilisée directement par l'interface graphique.
 
@@ -322,6 +322,15 @@ Nous concluons donc qu'environ 80 tubes seront nécessaires pour apporter le mé
 dans le réacteur de reformage primaire.
 
 \section{Outil de gestion}
+
+L'outil de gestion est fourni sous la forme d'un archive ZIP à côté de ce PDF.
+La fonction à utiliser est \texttt{masses\textunderscore and\textunderscore heat},
+qui prend simplement en paramètre la température en kelvin et le débit
+de \ce{NH3} en \kilogram\per\second.
+
+Nous avons développé une ébauche d'interface pour cette fonction,
+mais nous préférons reporter sa publication à un moment du projet où nous aurons
+une meilleure idée des besoins du projet.
 
 \printbibliography[heading=bibintoc]
 
