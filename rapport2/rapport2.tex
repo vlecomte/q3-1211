@@ -100,9 +100,141 @@ sont représentées par des flèches entre les inconnues.
 
 \subsection{Expression des équations}
 
+\section{Bilan d'énergie}
+
+Nous allons maintenant déterminer la quantité de CH4 qu’il nous faut introduire
+dans le four afin de produire l’énergie nécessaire aux réactions
+au niveau du reformage primaire pour une quantité de moles demandée.  
+
+Tout d’abord, les réactions au sein de ce réacteur sont globalement endothermiques.
+Elles ont donc besoin de recevoir une certaine quantité d’énergie
+déterminée par leur enthalpie de réaction respective.
+La combustion quant à elle est exothermique et c’est elle qui va fournir cette énergie.
+Nous ferons l’hypothèse qu’il n’y aura pas de pertes d’énergie
+entre le four et le reformage primaire.
+
+On peut donc exprimer la conservation d'énergie:
+$$\alpha*\Delta H_1 + \beta*\Delta H_2 + \xi*\Delta H\ind{four} = 0$$
+où $\alpha$, $\beta$ et $\xi$ sont les degrés d'avancement en \mole\per\second,
+et $\Delta H_1$, $\Delta H_2$ et $\Delta H_3$ les enthalpies molaires en
+\joule\per\mole des trois réactions.
+Les degrés d'avancement $\alpha$ et $\beta$ ont été calculées
+au préalable pour la quantité d’ammoniac désirée.
 
 
-\section{Bilan énergétique}
+\subsection{Calcul des différentes enthalpies à une température $T$}
+
+Pour calculer les différences d'enthalpie des différents composés,
+nous utilisons une des formes de l'équation de Shomate \cite{nist}:
+$$\Delta H(t) = A\,t + B\,\frac{t^2}{2} + C\,\frac{t^3}{3}
++ D\,\frac{t^4}{4} - E\,\frac{1}{t} + F$$
+où $A$, $B$, $C$, $D$, $E$ et $F$ sont des coefficients
+%\footnote{Ces coefficients se retrouvent dans l'annexe}
+qui dépendent du composé en question et où $t=\frac{T(\kelvin)}{1000}$.
+
+Cette équation donne la différence d'enthalpie entre le composé à la température $T$
+et sa forme élémentaire à un température standard $T\ind{ref} = 298.15\,\kelvin$.
+
+
+\subsubsection{Réactions reformage primaire}
+
+Nous allons considérer ici que les réactifs et les produits sont tous les deux
+à une température $T$ (avoisinant ici les $1000\,\kelvin$).
+
+
+\textbf{Réaction 1 :}  \ce{CH4 + H2O -> CO + 3H2}
+\begin{equation*}
+    \Delta H_1 (T) = 3*\Delta H_{\ce{H2}} (t)
+    + \Delta H_{\ce{CO}} (t)
+    - \Delta H_{\ce{CH4}} (t)
+    - \Delta H_{\ce{H2O}} (t) 
+\end{equation*}
+
+\textbf{Réaction 2 :}  \ce{CO + H2O -> CO2 + H2}
+\begin{equation*}
+    \Delta H_2 (T) = \Delta H_{\ce{CO2}} (t)
+    + \Delta H_{\ce{H2}} (t)
+    - \Delta H_{\ce{CO}} (t)
+    - \Delta H_{\ce{H2O}} (t) 
+\end{equation*}
+
+Chaque $\Delta H$ correspond à l’équation de Shomate
+avec les coefficients correspondant au composé en question.
+
+
+\subsubsection{Dans le four}
+
+Pour la combustion, nous allons considérer que nous apportons les réactifs
+à température ambiante, soit $298.15\,\kelvin$,
+et que les produits sortent à une température $T\ind{four}=1300\,\kelvin$.
+
+Pour établir le $\Delta H$ de cette réaction,
+il suffit une nouvelle fois d’appliquer l’équation de Shomate des produits à température T
+et d’y soustraire l’enthalpie de formation à température ambiante de chacun des réactifs,
+le tout pondéré par les coefficients stoechiométriques.
+
+
+\textbf{Réaction Four :}  \ce{CH4 + 2O2 -> CO2 + 2H2O}
+\begin{equation*}
+    \Delta H\ind{four}(T) =  \Delta H_{\ce{CO2}} (t)
+    + 2*\Delta H_{\ce{H2O}} (t)
+    - \Delta H\ind{form, \ce{CH4}}
+    - 2*\Delta H\ind{form, \ce{O2}}
+\end{equation*}
+
+
+\subsubsection{Cas pour une température particulière}
+
+
+Appliquons formules explicitées ci-dessus pour les températures $T=1000\,\kelvin$
+dans le réacteur et $T\ind{four} = 1300\,\kelvin$ dans le four,
+pour se donner une idée des valeurs auxquelles s'attendre:
+
+$$\Delta H_1 (1000\,\kelvin) = 225.72\,\kilo\joule\per\mole$$
+
+$$\Delta H_2 (1000\,\kelvin) = -34.779\,\kilo\joule\per\mole$$
+
+$$\Delta H\ind{four}  (1300\,\kelvin) = -674.28\,\kilo\joule\per\mole$$
+
+
+A présent, il nous reste à trouver le degré d'avancement $\xi$
+qui nous donnera les débits des réactifs et des produits de la combustion :
+$$\xi = \frac{\alpha * \Delta (H_1) + \beta * \Delta (H_2)}{\Delta (H_3)}$$
+où $\xi$ donnera le débit de \ce{CH4} et de \ce{CO2},
+2$\xi$ donnera le débit de \ce{O2} et de \ce{H2O}.
+
+
+Enfin, pour obtenir le débit de réactifs à introduire dans le four,
+il suffira de multiplier chacun des flux par la masse molaire des composés respectifs :
+\begin{equation*}
+    M_{\ce{CH4}}=16.0425\,\gram\per\mole \mbox{ et } M_{\ce{O2}}=31.9988\,\gram\per\mole
+\end{equation*}
+
+\section{Analyse paramétrique}
+
+Tout ce que nous avons calculé et modélisé nous permet maintenant de faire une analyse paramétrique de notre système, pour voir son évolution en fonction de la température et de la quantité de \ce{NH3} désirée.
+
+Nous avons choisi de faire varier la température entre $900\,\kelvin$ et $1100\,\kelvin$, ce qui constitue une gamme des températures les plus probables, et tout ceci pour une même masse d'ammoniac synthétisé.
+Nous n'avons pas jugé utile de faire un graphique pour différentes masses de \ce{NH3} car les entrées et sorties sont proportionnelles à celles-ci, et un tel graphique n'aurait donc pas été très intéressant.
+
+Nous présentons nos conclusions sur la figure~\ref{fig:graphe}.
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=\textwidth]{graphe1}
+        \caption{On peut observer sur ce graphique que seules les entrées et sorties de
+            \ce{H2O} varient.
+            En effet, toutes les autres entrées et sorties sont directement
+            liées à la quantité de \ce{NH3} désirée.
+            Celles-ci sont donc constantes sur notre graphique.
+            On peut également observer que la sortie de \ce{H2O} devient négative
+            à la température de $1045\,\kelvin$.
+            Le système a en fait besoin, à partir de cette température,
+            de plus d'eau dans le reformage secondaire.
+        }
+        \label{fig:graphe}
+    \end{center}
+\end{figure}
 
 \section{Nombre de tubes du réacteur}
 
