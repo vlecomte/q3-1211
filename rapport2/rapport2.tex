@@ -89,7 +89,7 @@ sont représentées par des flèches entre les inconnues.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{flows_matter}
+    \includegraphics[width=.9\textwidth]{flows_matter}
     \caption{
         Procédé de production du point de vue de la matière.
         On remarque que les relations d'équilibres s'appliquent après que les deux
@@ -103,7 +103,59 @@ sont représentées par des flèches entre les inconnues.
 
 
 \section{Bilan énergétique}
-\section{Nombre de tubes}
+
+\section{Nombre de tubes du réacteur}
+
+Dans cette partie, nous allons estimer le nombre de tubes opérés
+en parallèle pour apporter le méthane à l'entrée du réacteur de reformage primaire.
+
+L’énoncé nous indique que pour une capacité de $1500\,\ton\per\jour$ d’ammoniac,
+la vitesse superficielle typique à l’entrée du réacteur de reformage
+à vapeur de méthane est typiquement de $2\,\meter\per\second$.
+Nous savons que les tubes sont circulaires et leur diamètre est $10\,\centi\meter$.
+
+Nous prenons également pour les besoins du raisonnement qu'à l'endroit concerné
+une pression de $31\,\bbar$ et une température de $1000\,\kelvin$.
+
+Pour commencer, nous pouvons aisément déduire le débit volumique pour un tube,
+comme le produit de la vitesse $c$, et de la section du tube $A$.
+Nous obtenons:
+\begin{equation*}
+    \dot{V}\ind{tube} = c*A = 2\,\meter\per\second \times \pi(0.05\,\meter)^2
+    = 0.0157\,\meter\cubed\per\second
+\end{equation*}
+
+Ensuite, calculons le débit molaire de \ce{NH3} à la sortie
+à partir du débit massique $\dot{m} = 1500\,\ton\per\jour = 17.36\,\kilogram\per\second$.
+En le divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
+on obtient un débit de:
+\begin{equation*}
+    \dot{n}\ind{sortie} = \frac{\dot{m}}{M_{\ce{NH3}}}
+    = \frac{17.36\,\kilogram\per\second}{0.017\,\kilogram\per\mole}
+    = 1021.18\,\mole\per\second
+\end{equation*}
+
+En utilisant la fonction \texttt{moles} de notre outil de gestion,
+nous déterminons les débits molaires à l'entrée du réacteur:
+\begin{equation*}
+    \dot{n}\ind{entrée} = 451.7\,\mole\per\second
+\end{equation*}
+
+Maintenant, calculons le débit volumique total, $\dot{V}$.
+Appliquons pour cela la loi des gaz parfaits:
+\begin{equation*}
+    \dot{V} = \frac{\dot{n}\ind{entrée}RT}{p} = 1.211\,\meter\cubed\per\second
+\end{equation*}
+
+Pour finir, nous pouvons déterminer
+le nombre de tubes nécessaire avec la relation suivante:
+\begin{equation*}
+    \frac{\dot{V}}{\dot{V}\ind{tube}}
+    = \frac{1.211\,\meter\cubed\per\second}{0.0157\,\meter\cubed\per\second} = 77.16
+\end{equation*}
+Nous concluons donc qu'environ 80 tubes seront nécessaires pour apporter le méthane
+dans le réacteur de reformage primaire.
+
 \section{Outil de gestion}
 
 \printbibliography[heading=bibintoc]
