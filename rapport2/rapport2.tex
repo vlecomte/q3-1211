@@ -14,7 +14,7 @@
 
 \section{Introduction}
 
-Notre projet étant d’étudier la production d’ammoniac, en commençant par la synthèse de celui-ci à partir du reformage, il nous a été nécessaire de passer par l’étape de la gestion du plant. Ce rapport présente donc nos calculs et codes MATLAB du bilan de matière, en fonction de la température dans le réacteur et de la quantité d’ammoniac produite, du bilan d’énergie et finalement le calcul du nombre de tubes nécessaires à l’entrée des différents réactifs. 
+Notre sujet d'étude étant la production d’ammoniac, en commençant par la synthèse de celui-ci à partir du reformage, il nous a été nécessaire de passer par l’étape de la gestion du plant. Ce rapport présente donc nos calculs et codes MATLAB du bilan de matière, en fonction de la température dans le réacteur et de la quantité d’ammoniac produite, du bilan d’énergie et finalement le calcul du nombre de tubes nécessaires à l’entrée des différents réactifs. 
 
 \section{Flow-sheet rempli}
 
@@ -28,6 +28,80 @@ La figure~\ref{fig:flowsheet2} présente le flow-sheet que nous avons complété
 \end{figure}
 
 \section{Bilan de matière}
+
+Dans cette section nous allons utiliser ce que nous savons
+sur les réactions pour trouver les différents débits de matière du procédé
+en fonction du débit sortant de \ce{NH3}
+et de la température du réformage primaire.
+
+Il suffit \emph{a priori} de prendre ce débit
+d’ammoniac désiré et remonter pas à pas
+dans les différentes équations pour arriver aux réactifs de base
+et ainsi savoir de combien de moles, ou de kilogrammes, de matière première
+nous avons besoin.
+
+Cependant, ce n’est pas si simple étant donné
+que le procédé inclut des réactions à l’équilibre,
+pour lesquelles certains réactifs ne réagissent pas complètement,
+et accompagnent les produits dans les réactions suivantes.
+De plus, certains réactifs sont ajoutés à différents endroits dans la chaine,
+aux quantités inconnues, ce qui ajoute encore un niveau de complexité.
+
+Nous avons donc cherché une solution plus générale et automatique.
+Et cela signifie écrire un grand système d'équations et laisser notre environnement
+de calcul numérique favori le résoudre (presque) tout seul.
+
+\subsection{Inconnues et équations}
+
+Commençons par déterminer nos inconnues et les relations dont nous disposons.
+
+Pour les inconnues, nous choisissons les débits de moles suivants:
+\begin{itemize}
+    \item $\mathrm{in}_1$, $\mathrm{in}_2$, $\mathrm{in}_3$
+        les entrées de \ce{CH4}, \ce{H2O} et air;
+    \item $\mathrm{out}_1$, $\mathrm{out}_2$, $\mathrm{out}_3$,
+        $\mathrm{out}_4$ les sorties de \ce{H2O}, \ce{CO2}, \ce{Ar} et \ce{NH3};
+    \item $\alpha$, $\beta$, $\gamma$, $\delta$ et $\epsilon$
+        les degrés d'avancement des cinq réactions.
+\end{itemize}
+Il s'agit bien de débits, que nous exprimerons en $\mole\per\second$,
+car le procédé fonctionne en continu.%
+\footnote{Toutefois, les calculs seraient identiques
+pour un mode opératoire discret.}
+
+En ce qui concerne les équations, nous pouvons exprimer:
+\begin{itemize}
+    \item la conservation de chacune des 9 espèces à travers le procédé:
+        ce qui est apporté ou produit doit égaler ce qui est enlevé ce qui réagit;
+    \item le débit de sortie de \ce{NH3}, imposé par l'utilisateur;
+    \item les deux relations d'équilibre à la sortie du réacteur de réformage
+        primaire.
+\end{itemize}
+
+Nous avons $3+4+5 = 12$ inconnues et $9+1+2 = 12$ équations,
+donc le système est résolvable.
+
+Les différentes inconnues et équations sont illustrées dans
+la figure~\ref{fig:flows-matter}.
+Les inconnues (entrées, sorties et réactions) sont représentées par des cercles,
+tandis que les 9 relations de conservation de matière
+sont représentées par des flèches entre les inconnues.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{flows_matter}
+    \caption{
+        Procédé de production du point de vue de la matière.
+        On remarque que les relations d'équilibres s'appliquent après que les deux
+        réactions du reformage primaire aient eu lieu.
+    }
+    \label{fig:flows-matter}
+\end{figure}
+
+\subsection{Expression des équations}
+
+
+
 \section{Bilan énergétique}
 \section{Nombre de tubes}
 \section{Outil de gestion}
