@@ -6,7 +6,7 @@ c = shomate_coeffs();
 dc = 2*c.nh3 - c.n2 - 3*c.h2_low;
 
 T = 750;
-R = 8.314;
+R = 8.3144621;
 pref = 1e5;
 p = 270e5;
 
@@ -17,16 +17,15 @@ K = exp(-(dH-T*dS)/(R*T));
 Kp = K * (p/pref)^2;
 
 syms a real positive;
-f_nh3 = 1;
-f_n2 = a;
-f_h2 = 3*a;
+n_nh3 = 1;
+n_n2 = a;
+n_h2 = 3*a;
 
-f_tot = f_nh3 + f_n2 + f_h2;
+n_tot = n_nh3 + n_n2 + n_h2;
 
-a = solve((f_nh3/f_tot)^2 / ( (f_n2/f_tot) * (f_h2/f_tot)^3 ) == Kp);
-a = double(a);
+a = solve((n_nh3/n_tot)^2 / ((n_n2/n_tot) * (n_h2/n_tot)^3) == Kp);
 
-waste = 4*a/ (1+4*a);
+waste = double(eval((n_n2 + n_h2) / n_tot));
 
 end
 
