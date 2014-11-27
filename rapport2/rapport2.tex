@@ -26,6 +26,12 @@ La figure~\ref{fig:flowsheet2} présente le flow-sheet que nous avons complété
     \caption{Flow-sheet simplifiée du procédé de production d'ammoniac.}
     \label{fig:flowsheet2}
 \end{figure}
+%\begin{figure}
+%    \centering
+%    \input{flowsheet-matter.tex}
+%    \caption{Flow-sheet simplifiée du procédé de production d'ammoniac.}
+%    \label{fig:flowsheet-matter}
+%\end{figure}
 
 \section{Bilan de matière}
 
@@ -34,22 +40,23 @@ sur les réactions pour trouver les différents débits de matière du procédé
 en fonction du débit sortant de \ce{NH3}
 et de la température du réformage primaire.
 
-Il suffit \emph{a priori} de prendre ce débit
+Il suffit a priori de prendre ce débit
 d’ammoniac désiré et remonter pas à pas
-dans les différentes équations pour arriver aux réactifs de base
+dans les différentes équations en se servant des proportions stœchiométriques
+(technique dite \emph{bottom-up})
+pour déterminer les réactifs de base
 et ainsi savoir de combien de moles, ou de kilogrammes, de matière première
 nous avons besoin.
 
-Cependant, ce n’est pas si simple étant donné
-que le procédé inclut des réactions à l’équilibre,
-pour lesquelles certains réactifs ne réagissent pas complètement,
-et accompagnent les produits dans les réactions suivantes.
-De plus, certains réactifs sont ajoutés à différents endroits dans la chaine,
-aux quantités inconnues, ce qui ajoute encore un niveau de complexité.
+Cependant, l'utilisation de cette technique est rendue plus difficile par
+l'ajout de réactifs ou l'extraction de produits dans des quantités inconnues
+à plusieurs endroits du procédé, ainsi que par les réactions à l'équilibre,
+dont l'avancement dépend de la température.
 
-Nous avons donc cherché une solution plus générale et automatique.
-Et cela signifie écrire un grand système d'équations et laisser notre environnement
-de calcul numérique favori le résoudre (presque) tout seul.
+Nous avons donc cherché une solution plus générale et automatique,
+qui consiste à résoudre dans un système toutes les équations linéaires homogènes
+pour se concentrer ensuite sur la résolution des équations plus compliquées,
+avec un nombre plus petit de variables.
 
 \subsection{Inconnues et équations}
 
@@ -57,22 +64,24 @@ Commençons par déterminer nos inconnues et les relations dont nous disposons.
 
 Pour les inconnues, nous choisissons les débits de moles suivants:
 \begin{itemize}
-    \item $\mathrm{in}_1$, $\mathrm{in}_2$, $\mathrm{in}_3$
-        les entrées de \ce{CH4}, \ce{H2O} et air;
-    \item $\mathrm{out}_1$, $\mathrm{out}_2$, $\mathrm{out}_3$,
-        $\mathrm{out}_4$ les sorties de \ce{H2O}, \ce{CO2}, \ce{Ar} et \ce{NH3};
+    \item $\mathrm{in}_\ce{CH4}$, $\mathrm{in}_\ce{H2O}$
+        et $\mathrm{in}\ind{air}$
+        les débits d'entrée de \ce{CH4}, \ce{H2O} et air;
+    \item $\mathrm{out}_\ce{H2O}$, $\mathrm{out}_\ce{CO2}$,
+        $\mathrm{out}_\ce{Ar}$ et $\mathrm{out}_\ce{NH3}$
+        les débits de sortie de \ce{H2O}, \ce{CO2}, \ce{Ar} et \ce{NH3};
     \item $\alpha$, $\beta$, $\gamma$, $\delta$ et $\epsilon$
-        les degrés d'avancement des cinq réactions.
+        les degrés d'avancement par unité de temps
+        des réactions A, B, C, D et E comme notées sur le flow-sheet.
 \end{itemize}
 Il s'agit bien de débits, que nous exprimerons en $\mole\per\second$,
-car le procédé fonctionne en continu.%
-\footnote{Toutefois, les calculs seraient identiques
-pour un mode opératoire discret.}
+car le procédé fonctionne en continu.
 
 En ce qui concerne les équations, nous pouvons exprimer:
 \begin{itemize}
-    \item la conservation de chacune des 9 espèces à travers le procédé:
-        ce qui est apporté ou produit doit égaler ce qui est enlevé ou ce qui réagit;
+    \item la non-accumulation de chacune des 9 espèces à travers le procédé:
+        ce qui est apporté ou produit doit égaler
+        ce qui est enlevé ou ce qui réagit;
     \item le débit de sortie de \ce{NH3}, imposé par l'utilisateur;
     \item les deux relations d'équilibre à la sortie du réacteur de réformage
         primaire.
@@ -97,6 +106,10 @@ sont représentées par des flèches entre les inconnues.
     }
     \label{fig:flows-matter}
 \end{figure}
+
+\subsection{Expression des équations}
+
+
 
 \subsection{Résolution des équations}
 
