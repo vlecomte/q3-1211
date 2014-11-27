@@ -64,11 +64,11 @@ Commençons par déterminer nos inconnues et les relations dont nous disposons.
 
 Pour les inconnues, nous choisissons les débits de moles suivants:
 \begin{itemize}
-    \item $\mathrm{in}_\ce{CH4}$, $\mathrm{in}_\ce{H2O}$
-        et $\mathrm{in}\ind{air}$
+    \item $\mbox{in}_\ce{CH4}$, $\mbox{in}_\ce{H2O}$
+        et $\mbox{in}\ind{air}$
         les débits d'entrée de \ce{CH4}, \ce{H2O} et air;
-    \item $\mathrm{out}_\ce{H2O}$, $\mathrm{out}_\ce{CO2}$,
-        $\mathrm{out}_\ce{Ar}$ et $\mathrm{out}_\ce{NH3}$
+    \item $\mbox{out}_\ce{H2O}$, $\mbox{out}_\ce{CO2}$,
+        $\mbox{out}_\ce{Ar}$ et $\mbox{out}_\ce{NH3}$
         les débits de sortie de \ce{H2O}, \ce{CO2}, \ce{Ar} et \ce{NH3};
     \item $\alpha$, $\beta$, $\gamma$, $\delta$ et $\epsilon$
         les degrés d'avancement par unité de temps
@@ -109,7 +109,74 @@ sont représentées par des flèches entre les inconnues.
 
 \subsection{Expression des équations}
 
+Maintenant que nous nous sommes assurés que le système est résolvable,
+il faut exprimer les différentes équations.
 
+\subsubsection{Non-accumulation des espèces}
+
+Nous allons commencer par les 9 équations de non-accumulation des composés.
+
+Prenons pour commencer l'exemple du \ce{CH4}.
+On peut voir sur le flow-sheet (figure~\ref{fig:flows-matter}) que le \ce{CH4}:
+\begin{itemize}
+    \item entre au début du procédé, à un débit $\mbox{in}_\ce{CH4}$,
+    \item est consommé par la réaction A, à un débit $\alpha$,
+    \item et le reste est consommé par la réaction C, à un débit $2\gamma$%
+        \footnote{Le 2 ici provient du coefficient stœchiométrique du \ce{CH4}}.
+\end{itemize}
+
+Dès lors, en appliquant la relation générale de non-accumulation:
+\begin{equation*}
+    \mbox{entrée} + \mbox{production} = \mbox{sortie} + \mbox{consommation}
+\end{equation*}
+
+On obtient la relation liée au \ce{CH4}:
+\begin{equation*}
+    \mbox{in}_\ce{CH4} \quad + \quad 0 \quad
+    = \quad 0 \quad + \quad \alpha + 2\gamma
+\end{equation*}
+
+Prenons ensuite l'exemple du \ce{CO2}.
+On peut voir sur le flow-sheet que le \ce{CO2}
+\begin{itemize}
+    \item est produit par la réaction B, à un débit $\beta$,
+    \item est produit par la réaction D, à un débit $\delta$.
+    \item sort du procédé au niveau de la séparation,
+        à un débit $\mbox{out}_\ce{CO2}$.
+\end{itemize}
+
+En appliquant la relation générale, on obtient celle liée au \ce{CO2}:
+\begin{equation*}
+    0 \quad + \quad \beta + \delta \quad
+    = \quad \mbox{out}_\ce{CO2} \quad + \quad 0
+\end{equation*}
+
+Les autres relations de non-accumulation s'obtiennent de manière similaire,
+et sont recueillies dans ce système:
+\begin{equation*}
+    \left\{
+    \begin{array}{rcll}
+        \mbox{in}_\ce{CH4} &=& \alpha + 2\gamma
+            & \mbox{(\ce{CH4})}\\
+        \mbox{in}_\ce{H2O} &=& \mbox{out}_\ce{H2O} + \alpha + \beta + \delta
+            & \mbox{(\ce{H2O})}\\
+        3\alpha + \beta + 4\gamma + \delta &=& 3\epsilon
+            & \mbox{(\ce{H2})}\\
+        \alpha + 2\gamma &=& \beta + \delta
+            & \mbox{(\ce{CO})}\\
+        \beta + \delta &=& \mbox{out}_\ce{CO2}
+            & \mbox{(\ce{CO2})}\\
+        21\% \times \mbox{in}\ind{air} &=& \gamma
+            & \mbox{(\ce{O2})}\\
+        78\% \times \mbox{in}\ind{air} &=& \epsilon
+            & \mbox{(\ce{N2})}\\
+        1\% \times \mbox{in}\ind{air} &=& \mbox{out}_\ce{Ar}
+            & \mbox{(\ce{Ar})}\\
+        2\epsilon &=& \mbox{out}_\ce{NH3}
+            & \mbox{(\ce{NH3})}\\
+    \end{array}
+    \right.
+\end{equation*}
 
 \subsection{Résolution des équations}
 
