@@ -3,16 +3,16 @@
 function [eq_null] = param_moles_eq()
 
 % Represents the flow rates of chemicals coming out of the primary reformer
-% for CH4, H2, CO, CO2 and H2O as lines, in terms of the variables from
+% for CH4, H2O, H2, CO and CO2 as lines, in terms of the variables from
 % param_moles.m
 % For example, the quantity of CH4 at equilibrium (1st line)
 % is in1 - alpha.
 eq_components = [
     1 0 0 0 0 0 0 -1 0 0 0 0;
+    0 1 0 0 0 0 0 -1 -1 0 0 0;
     0 0 0 0 0 0 0 3 1 0 0 0;
     0 0 0 0 0 0 0 1 -1 0 0 0;
     0 0 0 0 0 0 0 0 1 0 0 0;
-    0 1 0 0 0 0 0 -1 -1 0 0 0;
     ];
 
 % By multiplying with the basis of the solutions to the linear relations,
