@@ -12,22 +12,24 @@ function [n] = param_moles()
 %   CH4, H2O, H2, CO, CO2, O2, N2, Ar, NH3
 % in that order.
 A = [
-    1 0 0 0 0 0 0 -1 0 -2 0 0;
-    0 1 0 -1 0 0 0 -1 -1 0 -1 0;
-    0 0 0 0 0 0 0 3 1 4 1 -3;
-    0 0 0 0 0 0 0 1 -1 2 -1 0;
-    0 0 0 0 -1 0 0 0 1 0 1 0;
-    0 0 .21 0 0 0 0 0 0 -1 0 0;
-    0 0 .78 0 0 0 0 0 0 0 0 -1;
-    0 0 .01 0 0 -1 0 0 0 0 0 0;
-    0 0 0 0 0 0 -1 0 0 0 0 2;
-    ];
+%  in  in  in  out out out out  alpha   gamma  epsilon
+% CH4 H2O air  H2O CO2  Ar NH3    . beta  . delta .
+    1   0   0,   0   0   0   0,  -1   0  -2   0   0; % CH4
+    0   1   0,  -1   0   0   0,  -1  -1   0  -1   0; % H2O
+    0   0   0,   0   0   0   0,   3   1   4   1  -3; % H2
+    0   0   0,   0   0   0   0,   1  -1   2  -1   0; % CO
+    0   0   0,   0  -1   0   0,   0   1   0   1   0; % CO2
+    0   0 .21,   0   0   0   0,   0   0  -1   0   0; % O2
+    0   0 .78,   0   0   0   0,   0   0   0   0  -1; % N2
+    0   0 .01,   0   0  -1   0,   0   0   0   0   0; % Ar
+    0   0   0,   0   0   0  -1,   0   0   0   0   2; % NH3
+];
 
 % Solves the above homogeneous system of equations.
 % As there are 12 variables and 9 equations, the solution is of
 % the form a*v1 + b*v2 + c*v3 with a,b,c flux parameters in [mol/s].
 % n is the matrix [v1 v2 v3].
-n = null(A, 'r');
+n = null(A, 'r')
 
 % The three resulting vectors can be interpreted as follows:
 % - v1: you can add water at in2, as long as you drain as much at out1;

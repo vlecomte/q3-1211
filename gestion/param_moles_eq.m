@@ -8,12 +8,14 @@ function [eq_null] = param_moles_eq()
 % For example, the quantity of CH4 at equilibrium (1st line)
 % is in1 - alpha.
 eq_components = [
-    1 0 0 0 0 0 0 -1 0 0 0 0;
-    0 1 0 0 0 0 0 -1 -1 0 0 0;
-    0 0 0 0 0 0 0 3 1 0 0 0;
-    0 0 0 0 0 0 0 1 -1 0 0 0;
-    0 0 0 0 0 0 0 0 1 0 0 0;
-    ];
+%  in  in  in  out out out out  alpha   gamma  epsilon
+% CH4 H2O air  H2O CO2  Ar NH3    . beta  . delta .
+    1   0   0,   0   0   0   0,  -1   0   0   0   0; % CH4
+    0   1   0,   0   0   0   0,  -1  -1   0   0   0; % H2O
+    0   0   0,   0   0   0   0,   3   1   0   0   0; % H2
+    0   0   0,   0   0   0   0,   1  -1   0   0   0; % CO
+    0   0   0,   0   0   0   0,   0   1   0   0   0; % CO2
+];
 
 % By multiplying with the basis of the solutions to the linear relations,
 % we obtain the base of possible values for the quantities at equilibrium,
