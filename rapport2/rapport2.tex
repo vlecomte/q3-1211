@@ -126,9 +126,9 @@ On peut voir sur le flow-sheet (figure~\ref{fig:flows-matter}) que le \ce{CH4}:
 \end{itemize}
 
 Dès lors, en appliquant la relation générale de non-accumulation:
-\begin{equation*}
+\begin{equation}
     \mbox{entrée} + \mbox{production} = \mbox{sortie} + \mbox{consommation}
-\end{equation*}
+\end{equation}
 
 On obtient la relation liée au \ce{CH4}:
 \begin{equation*}
@@ -153,7 +153,8 @@ En appliquant la relation générale, on obtient celle liée au \ce{CO2}:
 
 Les autres relations de non-accumulation s'obtiennent de manière similaire,
 et sont recueillies dans ce système:
-\begin{equation*}
+\begin{equation}
+    \label{eq:non-accu}
     \left\{
     \begin{array}{rcll}
         \mbox{in}_\ce{CH4} &=& \alpha + 2\gamma
@@ -176,7 +177,7 @@ et sont recueillies dans ce système:
             & \mbox{(\ce{NH3})}\\
     \end{array}
     \right.
-\end{equation*}
+\end{equation}
 
 Remarquons qu'il s'agit là d'équations linéaires et homogènes.
 
@@ -185,9 +186,9 @@ Remarquons qu'il s'agit là d'équations linéaires et homogènes.
 Considérons maintenant le deuxième type d'équation,
 celui qui lie la sortie en \ce{NH3} à la production imposée par l'utilisateur
 de l'usine de production. Elle s'exprime simplement:
-\begin{equation*}
+\begin{equation}
     \mbox{out}_\ce{NH3} = \mbox{production de \ce{NH3}}
-\end{equation*}
+\end{equation}
 Il s'agit d'une équation linéaire non-homogène.
 
 \subsubsection{Relations d'équilibre}
@@ -200,7 +201,8 @@ les rapports des débits sortants.
 
 Pour simplifier les expressions, nous introduisons les variables suivantes,
 qui correspondent aux débits des composés sortant du réformeur primaire.
-\begin{equation*}
+\begin{equation}
+    \label{eq:def-eq-flows}
     \left\{
     \begin{array}{lcl}
         \mbox{éq}_\ce{CH4} &=& \mbox{in}_\ce{CH4} - \alpha \\
@@ -210,13 +212,13 @@ qui correspondent aux débits des composés sortant du réformeur primaire.
         \mbox{éq}_\ce{CO2} &=& \beta \\
     \end{array}
     \right.
-\end{equation*}
+\end{equation}
 
 Ensuite, nous supposons connues les constantes d'équilibre
 $K\ind{A}$ et $K\ind{B}$
 des réactions A et B.
 Exprimons d'abord les équations en fonction des activités:
-\begin{equation*}
+\begin{equation}
     \left\{
     \begin{array}{ccccc}
         K\ind{A} &=& \frac{a_\ce{H2}^3\,a_\ce{CO}}{a_\ce{CH4}\,a_\ce{H2O}}
@@ -226,7 +228,7 @@ Exprimons d'abord les équations en fonction des activités:
             &=& \frac{p_\ce{H2}\,p_\ce{CO2}}{p_\ce{H2O}\,p_\ce{CO}}
     \end{array}
     \right.
-\end{equation*}
+\end{equation}
 
 Ensuite, exprimons les pressions partielles selon la pression totale
 $p\ind{tot}$ et le nombre de moles total $\mbox{éq}\ind{tot}$
@@ -249,7 +251,8 @@ $p\ind{tot}$ et le nombre de moles total $\mbox{éq}\ind{tot}$
 \end{equation*}
 
 Ou encore:
-\begin{equation*}
+\begin{equation}
+    \label{eq:equi_final}
     \left\{
     \begin{array}{ccccc}
         K\ind{A}\,/\,p\ind{tot}^2
@@ -263,7 +266,7 @@ Ou encore:
             &=& K_{\mboxs{B},\,p\indt{tot}}
     \end{array}
     \right.
-\end{equation*}
+\end{equation}
 
 Les constantes d'équilibre adaptées à la pression, $K_{\mboxs{A},\,p\indt{tot}}$
 et $K_{\mboxs{B},\,p\indt{tot}}$ peuvent être calculées à partir de
@@ -283,29 +286,170 @@ Pour rappel:
 \end{itemize}
 
 Elles sont ici triées dans l'ordre de difficulté croissante.
-Nous avons décidé dans notre programme de les résoudre dans cet ordre:
-\begin{enumerate}
-    \item Les neuf équations linéaires homogènes sont résolues,
-        laissant trois degrés de liberté.
-        On exprime les solutions sous la forme $av_1 + bv_2 + cv_3$
-        où $a$, $b$ et $c$ sont des paramètres de débit inconnus.
-        Cette étape est effectuée par la fonction \texttt{param\_moles}.
-    \item Ensuite on impose que la sortie de \ce{NH3} soit égale la valeur entrée.
-        Dans notre cas, cela déterminait le paramètre $c$.
-        Ceci est une des étapes de la fonction \texttt{solve\_equi}.
-    \item Enfin on résout les équations d'équilibre pour trouver les deux derniers
-        paramètres $a$ et $b$. C'est la deuxième partie de la fonction \texttt{solve\textunderscore equi}.
-        Notons que les débits à l'équilibre ont dû être préalablement exprimés en fonction
-        de $a$, $b$ et $c$, ce qui est le rôle de \texttt{param\_moles\_eq}.
-\end{enumerate}
+Nous avons décidé dans notre programme de les résoudre dans cet ordre.
 
-Une fois les paramètres $a$, $b$ et $c$ calculés, nous pouvons déduire tous les débits
-molaires du procédé, et une fois ceux-là obtenus,
-les débits massiques et les chaleurs produites ou absorbées par chacune des réactions.
-C'est le rôle de la fonction \texttt{masses\textunderscore and\textunderscore heat},
-qui prend simplement en paramètre la température en kelvin et le débit en \kilogram\per\second.
+\subsubsection{Résolution des équations homogènes}
 
-Celle-ci est utilisée directement par l'interface graphique.
+Pour rappel les équations liées à la non-accumulation des espèces
+\eqref{eq:non-accu}
+sont un système de 9 équations en 12 inconnues,
+avec $12-9=3$ degrés de liberté.
+On peut donc exprimer leurs solutions sous la forme $av_1 + bv_2 + cv_3$
+où $a$, $b$ et $c$ sont des paramètres de débit inconnus,
+et où $v_1$, $v_2$ et $v_3$ sont des vecteurs de taille $12\times 1$,
+qui correspondent aux degrés de libertés du système.
+
+En pratique, nous obtenons:
+\begin{equation}
+    \label{eq:param-flows}
+    \left(
+    \begin{array}{c}
+        \mbox{in}_\ce{CH4} \\
+        \mbox{in}_\ce{H2O} \\
+        \mbox{in}\ind{air} \\
+        \mbox{out}_\ce{H2O} \\
+        \mbox{out}_\ce{CO2} \\
+        \mbox{out}_\ce{Ar} \\
+        \mbox{out}_\ce{NH3} \\
+        \alpha \\
+        \beta \\
+        \gamma \\
+        \delta \\
+        \epsilon \\
+    \end{array}
+    \right)
+    \ =\ 
+    a\,
+    \left(
+    \begin{array}{c}
+         0\\ 1\\ 0\\ 1\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\
+    \end{array}
+    \right)
+    \ +\ b\,
+    \left(
+    \begin{array}{c}
+        0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ -1\\ 0\\ 1\\ 0\\
+    \end{array}
+    \right)
+    \ +\ c\,
+    \left(
+    \begin{array}{c}
+        0.885\\ 1.231\\ 1.282\\ 0\\ 0.885\\ 0.013\\ 2\\ 0.346\\ 0.885\\ 0.269\\ 0\\ 1\\
+    \end{array}
+    \right)
+\end{equation}
+
+Ces vecteurs peuvent être interprétés comme suit:
+\begin{itemize}
+    \item $v_1$ contient des $1$ au niveau de l'entrée et de la sortie d'eau.
+        L'explication est simple: on peut faire entrer plus d'eau dans
+        le système si on l'enlève par après.
+    \item $v_2$ contient un $-1$ pour $\beta$ et un $1$ pour $\delta$,
+        les degrés d'avancement des réactions B et D.
+        Cela s'explique en observant que ces deux réactions font les mêmes
+        ont la même équation chimique, même si elles se produisent à deux étapes
+        différentes:
+        \begin{center}\ce{CO + H2O <-> CO2 + H2}\end{center}
+        
+        Dès lors, la première peut avancer moins ($\beta$ peut diminuer)
+        à condition que la deuxième avance plus
+        (à condition que $\delta$ augmente).
+    \item $v_3$ contient une valeur non-nulle dans la ligne de l'ammoniac.
+        Il décrit une solution particulière pour la production d'une certaine
+        quantité d'ammoniac,
+        avec toutes les quantités de réactifs et produits qui y sont liés.
+\end{itemize}
+
+Cette étape est effectuée par la fonction \texttt{param\_moles}
+dans notre outil de gestion,
+qui renvoie les trois vecteurs $v_1$, $v_2$ et $v_3$.
+Elle les détermine en observant qu'il s'agit d'une base de l'espace annulateur
+de la matrice des coefficients du système:
+\begin{equation}
+    A\ =\
+    \left(
+    \begin{array}{ccc|cccc|ccccc}
+        1&  0&  0&   0&  0&  0&  0&  -1&  0& -2&  0&  0\\ % CH4
+        0&  1&  0&  -1&  0&  0&  0&  -1& -1&  0& -1&  0\\ % H2O
+        0&  0&  0&   0&  0&  0&  0&   3&  1&  4&  1& -3\\ % H2
+        0&  0&  0&   0&  0&  0&  0&   1& -1&  2& -1&  0\\ % CO
+        0&  0&  0&   0& -1&  0&  0&   0&  1&  0&  1&  0\\ % CO2
+        0&  0&.21&   0&  0&  0&  0&   0&  0& -1&  0&  0\\ % O2
+        0&  0&.78&   0&  0&  0&  0&   0&  0&  0&  0& -1\\ % N2
+        0&  0&.01&   0&  0& -1&  0&   0&  0&  0&  0&  0\\ % Ar
+        0&  0&  0&   0&  0&  0& -1&   0&  0&  0&  0&  2\\ % NH3
+    \end{array}
+    \right)
+\end{equation}
+les trois premières colonnes correspondent à
+$\mbox{in}_\ce{CH4}$,
+$\mbox{in}_\ce{H2O}$ et
+$\mbox{in}\ind{air}$;
+les quatres suivantes à
+$\mbox{out}_\ce{H2O}$,
+$\mbox{out}_\ce{CO2}$,
+$\mbox{out}_\ce{Ar}$ et
+$\mbox{out}_\ce{NH3}$;
+et les cinq dernières à
+$\alpha$,
+$\beta$,
+$\gamma$,
+$\delta$ et
+$\epsilon$.
+
+\subsubsection{Imposition du débit de sortie}
+
+Maintenant que l'on a trouvé les vecteurs $v_1$, $v_2$ et $v_3$,
+on impose que la sortie de \ce{NH3} soit égale la valeur entrée.
+
+Dans notre cas, cela détermine donc le paramètre $c$.
+En effet, le coefficient de $\mbox{out}_\ce{NH3}$ est nul dans $v_1$ et $v_2$,
+tandis qu'il vaut 2 dans $v_3$, ce qui veut dire que:
+\begin{equation*}
+    \mbox{out}_\ce{NH3} = 2c
+\end{equation*}
+
+Puisque $\mbox{out}_\ce{NH3}$ correspond à la production de \ce{NH3} imposée
+par l'utilisateur, on a finalement:
+\begin{equation}
+    c\ =\ \mbox{production de \ce{NH3}} \ /\ 2
+\end{equation}
+
+Ceci est la première de la fonction \texttt{solve\_equi}
+dans notre outil de gestion.
+
+\subsubsection{Résolution des relations d'équilibre}
+
+Il nous reste maintenant à trouver $a$ et $b$,
+en exprimant les deux relations d'équilibre selon ces deux derniers paramètres.
+
+Pour cela, nous exprimons d'abord les débits molaires à la sortie du
+réacteur de réformage
+$\mbox{éq}_\ce{CH4}$, $\mbox{éq}_\ce{H2O}$, $\mbox{éq}_\ce{H2}$,
+$\mbox{éq}_\ce{CO}$ et $\mbox{éq}_\ce{CO2}$ en fonction de $a$ et de $b$.
+On peut faire ça en injectant les solutions paramétriques
+de l'équation \eqref{eq:param-flows}
+dans les expressions de ces flux de sortie
+de l'équation \eqref{eq:def-eq-flows}. C'est ce que fait la fonction
+\texttt{param\_moles\_eq}.
+
+Ensuite, nous utilisons réinjectons ces expressions dans les équations
+\eqref{eq:equi_final}, et nous utilisons la librairie symbolique de \MATLAB{}
+pour trouver $a$ puis $b$.
+
+Une fois ces paramètres $a$, $b$ et $c$ calculés,
+nous pouvons déduire directement les débits d'entrée, de sortie et les degrés
+d'avancement (ce qui est fait dans \texttt{moles});
+et de là tous les débits molaires du procédé.
+
+Une fois ceux-là obtenus, nous pouvons déduire tous
+les débits massiques,
+et les puissances produites ou absorbées par chacune des réactions.
+C'est le rôle de la fonction \texttt{masses\_and\_heat}.
+Elle prend en paramètre la température du réformeur primaire, en kelvins,
+et le débit massique de \ce{NH3} à produire, en tonnes par jour.%
+\footnote{Ou dans n'importe quelle autre unité de masse par temps.
+Les valeurs retournées seront exprimées dans la même unité. Magique, non?}
 
 \section{Bilan d'énergie}
 
