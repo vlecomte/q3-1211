@@ -311,23 +311,21 @@ Celle-ci est utilisée directement par l'interface graphique.
 
 Nous allons maintenant déterminer la quantité de CH4 qu’il nous faut introduire
 dans le four afin de produire l’énergie nécessaire aux réactions
-au niveau du reformage primaire pour une quantité de moles demandée.  
+au niveau du reformage primaire pour une quantité de moles demandée.
 
 Tout d’abord, les réactions au sein de ce réacteur sont globalement endothermiques.
 Elles ont donc besoin de recevoir une certaine quantité d’énergie
-déterminée par leur enthalpie de réaction respective.
+déterminée par leurs enthalpies de réaction respective.
 La combustion quant à elle est exothermique et c’est elle qui va fournir cette énergie.
-Nous ferons l’hypothèse qu’il n’y aura pas de pertes d’énergie
-entre le four et le reformage primaire.
+Nous prenons également en compte que le rendement énergétique du four est de 75\%.
 
 On peut donc exprimer la conservation d'énergie:
-$$\alpha*\Delta H_1 + \beta*\Delta H_2 + \xi*\Delta H\ind{four} = 0$$
-où $\alpha$, $\beta$ et $\xi$ sont les degrés d'avancement en \mole\per\second,
-et $\Delta H_1$, $\Delta H_2$ et $\Delta H_3$ les enthalpies molaires en
-\joule\per\mole des trois réactions.
+$$\alpha*\Delta H_1 + \beta*\Delta H_2 + \frac{75}{100}*\xi*\Delta H\ind{four} = 0$$
+où $\alpha$, $\beta$ et $\xi$ sont les degrés d'avancement en $\mole\per\jour$,
+et $\Delta H_1$, $\Delta H_2$ et $\Delta H\ind{four}$ les enthalpies molaires en
+$\joule\per\mole$ des trois réactions.
 Les degrés d'avancement $\alpha$ et $\beta$ ont été calculées
 au préalable pour la quantité d’ammoniac désirée.
-
 
 \subsection{Calcul des différentes enthalpies à une température $T$}
 
@@ -338,36 +336,32 @@ $$\Delta H(t) = A\,t + B\,\frac{t^2}{2} + C\,\frac{t^3}{3}
 où $A$, $B$, $C$, $D$, $E$ et $F$ sont des coefficients
 %\footnote{Ces coefficients se retrouvent dans l'annexe}
 qui dépendent du composé en question et où $t=\frac{T(\kelvin)}{1000}$.
-
 Cette équation donne la différence d'enthalpie entre le composé à la température $T$
 et sa forme élémentaire à une température standard $T\ind{ref} = 298.15\,\kelvin$.
-
 
 \subsubsection{Réactions reformage primaire}
 
 Nous allons considérer ici que les réactifs et les produits sont tous les deux
 à une température $T$ (avoisinant ici les $1000\,\kelvin$).
 
-
-\textbf{Réaction 1 :}  \ce{CH4 + H2O -> CO + 3H2}
+\textbf{Réaction 1 :} \ce{CH4 + H2O -> CO + 3H2}
 \begin{equation*}
-    \Delta H_1 (T) = 3*\Delta H_{\ce{H2}} (t)
-    + \Delta H_{\ce{CO}} (t)
-    - \Delta H_{\ce{CH4}} (t)
-    - \Delta H_{\ce{H2O}} (t) 
+\Delta H_1 (T) = 3*\Delta H_{\ce{H2}} (t)
++ \Delta H_{\ce{CO}} (t)
+- \Delta H_{\ce{CH4}} (t)
+- \Delta H_{\ce{H2O}} (t)
 \end{equation*}
 
-\textbf{Réaction 2 :}  \ce{CO + H2O -> CO2 + H2}
+\textbf{Réaction 2 :} \ce{CO + H2O -> CO2 + H2}
 \begin{equation*}
-    \Delta H_2 (T) = \Delta H_{\ce{CO2}} (t)
-    + \Delta H_{\ce{H2}} (t)
-    - \Delta H_{\ce{CO}} (t)
-    - \Delta H_{\ce{H2O}} (t) 
+\Delta H_2 (T) = \Delta H_{\ce{CO2}} (t)
++ \Delta H_{\ce{H2}} (t)
+- \Delta H_{\ce{CO}} (t)
+- \Delta H_{\ce{H2O}} (t)
 \end{equation*}
 
 Chaque $\Delta H$ correspond à l’équation de Shomate
 avec les coefficients correspondant au composé en question.
-
 
 \subsubsection{Dans le four}
 
@@ -380,67 +374,64 @@ il suffit une nouvelle fois d’appliquer l’équation de Shomate des produits 
 et d’y soustraire l’enthalpie de formation à température ambiante de chacun des réactifs,
 le tout pondéré par les coefficients stoechiométriques.
 
-
-\textbf{Réaction Four :}  \ce{CH4 + 2O2 -> CO2 + 2H2O}
+\textbf{Réaction Four :} \ce{CH4 + 2O2 -> CO2 + 2H2O}
 \begin{equation*}
-    \Delta H\ind{four}(T) =  \Delta H_{\ce{CO2}} (t)
-    + 2*\Delta H_{\ce{H2O}} (t)
-    - \Delta H\ind{form, \ce{CH4}}
-    - 2*\Delta H\ind{form, \ce{O2}}
+\Delta H\ind{four}(T) = \Delta H_{\ce{CO2}} (T)
++ 2*\Delta H_{\ce{H2O}} (T)
+- \Delta H\ind{\ce{CH4}}(T)
+- 2*\Delta H\ind{\ce{O2}}(T)
 \end{equation*}
 
-
 \subsubsection{Cas pour une température particulière}
-
 
 Appliquons formules explicitées ci-dessus pour les températures $T=1000\,\kelvin$
 dans le réacteur et $T\ind{four} = 1300\,\kelvin$ dans le four,
 pour se donner une idée des valeurs auxquelles s'attendre:
-
 $$\Delta H_1 (1000\,\kelvin) = 225.72\,\kilo\joule\per\mole$$
-
 $$\Delta H_2 (1000\,\kelvin) = -34.779\,\kilo\joule\per\mole$$
-
-$$\Delta H\ind{four}  (1300\,\kelvin) = -674.28\,\kilo\joule\per\mole$$
-
+$$\Delta H\ind{four} (1300\,\kelvin) = -802.26\,\kilo\joule\per\mole$$
 
 A présent, il nous reste à trouver le degré d'avancement $\xi$
 qui nous donnera les débits des réactifs et des produits de la combustion :
-$$\xi = \frac{\alpha * \Delta (H_1) + \beta * \Delta (H_2)}{\Delta (H_3)}$$
+$$\xi = \frac{\alpha * \Delta (H_1) + \beta * \Delta (H_2)}{-\Delta (H\ind{four})}*\frac{100}{75}$$
 où $\xi$ donnera le débit de \ce{CH4} et de \ce{CO2},
 2$\xi$ donnera le débit de \ce{O2} et de \ce{H2O}.
 
+Si l'on désire un débit de 1000 $\ton\per\jour$ d'ammoniac à la sortie,  nous obtenons, grâce à notre outil de gestion Matlab, que  $\alpha$, le degré d'avancement de la première réaction, vaut $1,0181\times10^4$ $\mole\per\jour$ et que $\beta$, le degré d'avancement de la seconde réaction, vaut $0,5918\times10^4$ $\mole\per\jour$.
 
 Enfin, pour obtenir le débit de réactifs à introduire dans le four,
 il suffira de multiplier chacun des flux par la masse molaire des composés respectifs :
 \begin{equation*}
-    M_{\ce{CH4}}=16.0425\,\gram\per\mole \mbox{ et } M_{\ce{O2}}=31.9988\,\gram\per\mole
+M_{\ce{CH4}}=16.0425\,\gram\per\mole \mbox{ et } M_{\ce{O2}}=31.9988\,\gram\per\mole
 \end{equation*}
+Ainsi, la quantité de \ce{CH4} à fournir au four est de $\xi \times M_{\ce{CH4}} = 55,7  \kilo\gram\per\jour$
+\\et la quantité de \ce{O2} à lui fournir est de $2\xi \times M_{\ce{O2}} = 222,1 \kilo\gram\per\jour$.
 
 \section{Analyse paramétrique}
 
 Tout ce que nous avons calculé et modélisé nous permet maintenant de faire une analyse paramétrique de notre système, pour voir son évolution en fonction de la température et de la quantité de \ce{NH3} désirée.
 
 Nous avons choisi de faire varier la température entre $900\,\kelvin$ et $1100\,\kelvin$, ce qui constitue une gamme des températures les plus probables, et tout ceci pour une même masse d'ammoniac synthétisé.
+
 Nous n'avons pas jugé utile de faire un graphique pour différentes masses de \ce{NH3} car les entrées et sorties sont proportionnelles à celles-ci, et un tel graphique n'aurait donc pas été très intéressant.
 
-Nous présentons nos conclusions sur la figure~\ref{fig:graphe}.
+Nous présentons nos résultats sur la figure~\ref{fig:graphe}. On peut observer sur ce graphique que seules les entrées et sorties de
+\ce{H2O} varient.
+En effet, toutes les autres entrées et sorties sont directement
+liées à la quantité de \ce{NH3} désirée.
+Celles-ci sont donc constantes sur notre graphique.
+
+On peut également observer que la sortie de \ce{H2O} devient négative
+à la température de $1045\,\kelvin$.
+Le système a en fait besoin, à partir de cette température,
+de plus d'eau dans le reformage secondaire. Mais, les hypothèses nous imposent de n'introduire de l'eau qu'au niveau du reformage primaire, la production de \ce{NH3} n'est donc plus possible à partir de cette température.
 
 \begin{figure}
-    \begin{center}
-        \includegraphics[width=\textwidth]{graphe1}
-        \caption{On peut observer sur ce graphique que seules les entrées et sorties de
-            \ce{H2O} varient.
-            En effet, toutes les autres entrées et sorties sont directement
-            liées à la quantité de \ce{NH3} désirée.
-            Celles-ci sont donc constantes sur notre graphique.
-            On peut également observer que la sortie de \ce{H2O} devient négative
-            à la température de $1045\,\kelvin$.
-            Le système a en fait besoin, à partir de cette température,
-            de plus d'eau dans le reformage secondaire.
-        }
-        \label{fig:graphe}
-    \end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{graphe1}
+\caption{graphique montrant l'évolution des masses d'entrée et de sortie en fonction de la température.}
+\label{fig:graphe}
+\end{center}
 \end{figure}
 
 \section{Nombre de tubes du réacteur}
@@ -452,7 +443,6 @@ L’énoncé nous indique que pour une capacité de $1500\,\ton\per\jour$ d’am
 la vitesse superficielle typique à l’entrée du réacteur de reformage
 à vapeur de méthane est typiquement de $2\,\meter\per\second$.
 Nous savons que les tubes sont circulaires et leur diamètre est $10\,\centi\meter$.
-
 Nous prenons également pour les besoins du raisonnement
 une pression de $31\,\bbar$ et une température de $1000\,\kelvin$
 à l'endroit concerné.
@@ -461,39 +451,40 @@ Pour commencer, nous pouvons aisément déduire le débit volumique pour un tube
 comme le produit de la vitesse $c$, et de la section du tube $A$.
 Nous obtenons:
 \begin{equation*}
-    \dot{V}\ind{tube} = c*A = 2\,\meter\per\second \times \pi(0.05\,\meter)^2
-    = 0.0157\,\meter\cubed\per\second
+\dot{V}\ind{tube} = c*A = 2\,\meter\per\second \times \pi(0.05\,\meter)^2
+= 0.0157\,\meter\cubed\per\second
 \end{equation*}
 
-Ensuite, calculons le débit molaire de \ce{NH3} à la sortie
+Ensuite, pour connaître le débit molaire en \ce{CH4} et \ce{H20} à l'entrée, nous devons calculer le débit molaire de \ce{NH3} à la sortie
 à partir du débit massique $\dot{m} = 1500\,\ton\per\jour = 17.36\,\kilogram\per\second$.
 En divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
 on obtient un débit de:
 \begin{equation*}
-    \dot{n}\ind{sortie} = \frac{\dot{m}}{M_{\ce{NH3}}}
-    = \frac{17.36\,\kilogram\per\second}{0.017\,\kilogram\per\mole}
-    = 1021.18\,\mole\per\second
+\dot{n}\ind{sortie} = \frac{\dot{m}}{M_{\ce{NH3}}}
+= \frac{17.36\,\kilogram\per\second}{0.017\,\kilogram\per\mole}
+= 1021.18\,\mole\per\second
 \end{equation*}
 
 En utilisant la fonction \texttt{moles} de notre outil de gestion,
 nous déterminons les débits molaires à l'entrée du réacteur:
 \begin{equation*}
-    \dot{n}\ind{entrée} = 451.7\,\mole\per\second
+\dot{n}\ind{entrée} =  \dot{n}\ind{\ce{CH4}}+ \dot{n}\ind{\ce{H2O}}=451.7\,\mole\per\second + 890,4\,\mole\per\second = 1342,1 \,\mole\per\second
 \end{equation*}
 
 Maintenant, calculons le débit volumique total, $\dot{V}$.
 Appliquons pour cela la loi des gaz parfaits:
 \begin{equation*}
-    \dot{V} = \frac{\dot{n}\ind{entrée}RT}{p} = 1.211\,\meter\cubed\per\second
+\dot{V} = \frac{\dot{n}\ind{entrée}RT}{p} = 3,60\,\meter\cubed\per\second
 \end{equation*}
 
 Pour finir, nous pouvons déterminer
 le nombre de tubes nécessaire avec la relation suivante:
 \begin{equation*}
-    \frac{\dot{V}}{\dot{V}\ind{tube}}
-    = \frac{1.211\,\meter\cubed\per\second}{0.0157\,\meter\cubed\per\second} = 77.16
+\frac{\dot{V}}{\dot{V}\ind{tube}}
+= \frac{1.211\,\meter\cubed\per\second}{0.0157\,\meter\cubed\per\second} = 229,26
 \end{equation*}
-Nous concluons donc qu'environ 80 tubes seront nécessaires pour apporter le méthane
+
+Nous concluons donc qu'environ 230 tubes seront nécessaires pour apporter le méthane
 dans le réacteur de reformage primaire.
 
 \section{Outil de gestion}
