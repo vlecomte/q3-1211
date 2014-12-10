@@ -61,7 +61,10 @@
 
 % Math
 \newcommand{\reals}{\mathbb{R}} % Set of real numbers
-\newcommand{\ind}[1]{_{\mbox{\scriptsize{#1}}}} % Text indices
+\newcommand{\mboxs}[1]{\mbox{\scriptsize{#1}}} % Small mboxes
+\newcommand{\mboxt}[1]{\mbox{\tiny{#1}}} % Tiny mboxes
+\newcommand{\ind}[1]{_{\mboxs{#1}}} % Text indices
+\newcommand{\indt}[1]{_{\mboxt{#1}}} % Tiny text indices
 \newcommand{\scal}[2]{\left(#1\,\middle|\,#2\right)} % Scalar product
 \newcommand{\dist}{\mathrm{dist}} % Distance function
 \newcommand{\jour}{\mathrm{j}} % Unit symbol for a day in French
