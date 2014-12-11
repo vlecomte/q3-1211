@@ -296,7 +296,7 @@ Nous avons décidé dans notre programme de les résoudre dans cet ordre.
 
 Pour rappel les équations liées à la non-accumulation des espèces
 \eqref{eq:non-accu}
-sont un système de 9 équations en 12 inconnues,
+sont un système de 9 équations pour 12 inconnues,
 avec $12-9=3$ degrés de liberté.
 On peut donc exprimer leurs solutions sous la forme $av_1 + bv_2 + cv_3$
 où $a$, $b$ et $c$ sont des paramètres de débit inconnus,
@@ -350,7 +350,7 @@ Ces vecteurs peuvent être interprétés comme suit:
         le système si on l'enlève par après.
     \item $v_2$ contient un $-1$ pour $\beta$ et un $1$ pour $\delta$,
         les degrés d'avancement des réactions B et D.
-        Cela s'explique en observant que ces deux réactions font les mêmes
+        Cela s'explique en observant que ces deux réactions
         ont la même équation chimique, même si elles se produisent à deux étapes
         différentes:
         \begin{center}\ce{CO + H2O <-> CO2 + H2}\end{center}
@@ -404,7 +404,7 @@ $\epsilon$.
 \subsubsection{Imposition du débit de sortie}
 
 Maintenant que l'on a trouvé les vecteurs $v_1$, $v_2$ et $v_3$,
-on impose que la sortie de \ce{NH3} soit égale la valeur entrée.
+on impose que la sortie de \ce{NH3} soit égale à la valeur entrée.
 
 Dans notre cas, cela détermine donc le paramètre $c$.
 En effet, le coefficient de $\mbox{out}_\ce{NH3}$ est nul dans $v_1$ et $v_2$,
@@ -437,7 +437,7 @@ dans les expressions de ces flux de sortie
 de l'équation \eqref{eq:def-eq-flows}. C'est ce que fait la fonction
 \texttt{param\_moles\_eq}.
 
-Ensuite, nous utilisons réinjectons ces expressions dans les équations
+Ensuite, nous réinjectons ces expressions dans les équations
 \eqref{eq:equi_final}, et nous utilisons la librairie symbolique de \MATLAB{}
 pour trouver $a$ puis $b$.
 
@@ -457,13 +457,13 @@ Les valeurs retournées seront exprimées dans la même unité. Magique, non?}
 
 \section{Bilan d'énergie}
 
-Nous allons maintenant déterminer la quantité de CH4 qu’il nous faut introduire
+Nous allons maintenant déterminer la quantité de \ce{CH4} qu’il nous faut introduire
 dans le four afin de produire l’énergie nécessaire aux réactions
 au niveau du reformage primaire pour une quantité de moles demandée.
 
 Tout d’abord, les réactions au sein de ce réacteur sont globalement endothermiques.
 Elles ont donc besoin de recevoir une certaine quantité d’énergie
-déterminée par leurs enthalpies de réaction respective.
+déterminée par leurs enthalpies de réaction respectives.
 La combustion quant à elle est exothermique et c’est elle qui va fournir cette énergie.
 Nous prenons également en compte que le rendement énergétique du four est de 75\%.
 
@@ -532,7 +532,7 @@ le tout pondéré par les coefficients stoechiométriques.
 
 \subsubsection{Cas pour une température particulière}
 
-Appliquons formules explicitées ci-dessus pour les températures $T=1000\,\kelvin$
+Appliquons les formules explicitées ci-dessus pour les températures $T=1000\,\kelvin$
 dans le réacteur et $T\ind{four} = 1300\,\kelvin$ dans le four,
 pour se donner une idée des valeurs auxquelles s'attendre:
 $$\Delta H_1 (1000\,\kelvin) = 225.72\,\kilo\joule\per\mole$$
@@ -588,7 +588,7 @@ Dans cette partie, nous allons estimer le nombre de tubes opérés
 en parallèle pour apporter le méthane à l'entrée du réacteur de reformage primaire.
 
 L’énoncé nous indique que pour une capacité de $1500\,\ton\per\jour$ d’ammoniac,
-la vitesse superficielle typique à l’entrée du réacteur de reformage
+la vitesse superficielle à l’entrée du réacteur de reformage
 à vapeur de méthane est typiquement de $2\,\meter\per\second$.
 Nous savons que les tubes sont circulaires et leur diamètre est $10\,\centi\meter$.
 Nous prenons également pour les besoins du raisonnement
