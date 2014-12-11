@@ -8,22 +8,22 @@ M = molar_masses();
 [n_reac, n_oven] = moles(T, m_nh3/M.nh3);
 
 % Mass flow rates in and out of the reactor
-m_reac.in1  = n_reac(1) * M.ch4;
-m_reac.in2  = n_reac(2) * M.h2o;
-m_reac.in3  = n_reac(3) * M.air;
-m_reac.out1 = n_reac(4) * M.h2o;
-m_reac.out2 = n_reac(5) * M.co2;
-m_reac.out3 = n_reac(6) * M.ar ;
-m_reac.out4 = n_reac(7) * M.nh3;
+m_reac.in_ch4  = n_reac.in_ch4  * M.ch4;
+m_reac.in_h2o  = n_reac.in_h2o  * M.h2o;
+m_reac.in_air  = n_reac.in_air  * M.air;
+m_reac.out_h2o = n_reac.out_h2o * M.h2o;
+m_reac.out_co2 = n_reac.out_co2 * M.co2;
+m_reac.out_ar  = n_reac.out_ar  * M.ar ;
+m_reac.out_nh3 = n_reac.out_nh3 * M.nh3;
 
 % Mass flow rates in and out of the oven
-m_oven.ch4 = n_oven(1) * M.ch4;
-m_oven.o2  = n_oven(2) * M.o2 ;
-m_oven.co2 = n_oven(3) * M.co2;
-m_oven.h2o = n_oven(4) * M.h2o;
+m_oven.ch4 = n_oven.in_ch4  * M.ch4;
+m_oven.o2  = n_oven.in_o2   * M.o2 ;
+m_oven.co2 = n_oven.out_co2 * M.co2;
+m_oven.h2o = n_oven.out_h2o * M.h2o;
 
 % Heat brought to the five reactions
-q_reac = delta_h_reac(T, n_reac(8), n_reac(9), n_reac(10), n_reac(11), ...
-    n_reac(12));
+q_reac = delta_h_reac(T, n_reac.alpha, n_reac.beta, n_reac.gamma,...
+    n_reac.delta, n_reac.epsilon);
 
 end
