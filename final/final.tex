@@ -1,0 +1,24 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{../latex/mystyle}
+\addbibresource{ref.bib}
+
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\lhead{Groupe 1211}
+\chead{Projet~3 --- 2014}
+\rhead{\thepage}
+\fancyfoot{}
+\fancypagestyle{plain}{\renewcommand{\headrulewidth}{0.4pt}}
+
+\begin{document}
+
+\include{title}
+\tableofcontents
+
+\include{rapport1}
+\include{rapport2}
+
+\printbibliography[heading=bibintoc]
+
+\end{document}

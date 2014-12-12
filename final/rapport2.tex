@@ -1,0 +1,635 @@
+\chapter{Tâche~1 --- Rapport~2}
+
+\section{Introduction}
+
+Notre sujet d'étude étant la production d’ammoniac, en commençant par la synthèse de celui-ci à partir du reformage, il nous a été nécessaire de passer par l’étape de la gestion du plant. Ce rapport présente donc nos calculs et codes MATLAB du bilan de matière, en fonction de la température dans le réacteur et de la quantité d’ammoniac produite, du bilan d’énergie et finalement le calcul du nombre de tubes nécessaires à l’entrée des différents réactifs. 
+
+\section{Flow-sheet rempli}
+
+La figure~\ref{fig:flowsheet2} présente le flow-sheet que nous avons complété à l'aide des sources \cite{epa} et \cite{process-patent}.
+
+\begin{figure}
+    \centering
+    \input{flowsheet2.tex}
+    \caption{Flow-sheet simplifiée du procédé de production d'ammoniac.}
+    \label{fig:flowsheet2}
+\end{figure}
+%\begin{figure}
+%    \centering
+%    \input{flowsheet-matter.tex}
+%    \caption{Flow-sheet simplifiée du procédé de production d'ammoniac.}
+%    \label{fig:flowsheet-matter}
+%\end{figure}
+
+\section{Bilan de matière}
+
+Dans cette section nous allons utiliser ce que nous savons
+sur les réactions pour trouver les différents débits de matière du procédé
+en fonction du débit sortant de \ce{NH3}
+et de la température du réformage primaire.
+
+Il suffit a priori de prendre ce débit
+d’ammoniac désiré et remonter pas à pas
+dans les différentes équations en se servant des proportions stœchiométriques
+(technique dite \emph{bottom-up})
+pour déterminer les réactifs de base
+et ainsi savoir de combien de moles, ou de kilogrammes, de matière première
+nous avons besoin.
+
+Cependant, l'utilisation de cette technique est rendue plus difficile par
+l'ajout de réactifs ou l'extraction de produits dans des quantités inconnues
+à plusieurs endroits du procédé, ainsi que par les réactions à l'équilibre,
+dont l'avancement dépend de la température.
+
+Nous avons donc cherché une solution plus générale et automatique,
+qui consiste à résoudre dans un système toutes les équations linéaires homogènes
+pour se concentrer ensuite sur la résolution des équations plus compliquées,
+avec un nombre plus petit de variables.
+
+\subsection{Inconnues et équations}
+
+Commençons par déterminer nos inconnues et les relations dont nous disposons.
+
+Pour les inconnues, nous choisissons les débits de moles suivants:
+\begin{itemize}
+    \item $\mbox{in}_\ce{CH4}$, $\mbox{in}_\ce{H2O}$
+        et $\mbox{in}\ind{air}$
+        les débits d'entrée de \ce{CH4}, \ce{H2O} et air;
+    \item $\mbox{out}_\ce{H2O}$, $\mbox{out}_\ce{CO2}$,
+        $\mbox{out}_\ce{Ar}$ et $\mbox{out}_\ce{NH3}$
+        les débits de sortie de \ce{H2O}, \ce{CO2}, \ce{Ar} et \ce{NH3};
+    \item $\alpha$, $\beta$, $\gamma$, $\delta$ et $\epsilon$
+        les degrés d'avancement par unité de temps
+        des réactions A, B, C, D et E comme notées sur le flow-sheet.
+\end{itemize}
+Il s'agit bien de débits, que nous exprimerons en $\mole\per\second$,
+car le procédé fonctionne en continu.
+
+En ce qui concerne les équations, nous pouvons exprimer:
+\begin{itemize}
+    \item la non-accumulation de chacune des 9 espèces à travers le procédé:
+        ce qui est apporté ou produit doit égaler
+        ce qui est enlevé ou ce qui réagit;
+    \item le débit de sortie de \ce{NH3}, imposé par l'utilisateur;
+    \item les deux relations d'équilibre à la sortie du réacteur de réformage
+        primaire.
+\end{itemize}
+
+Nous avons $3+4+5 = 12$ inconnues et $9+1+2 = 12$ équations,
+donc le système est résolvable.
+
+Les différentes inconnues et équations sont illustrées dans
+la figure~\ref{fig:flows-matter}.
+Les inconnues (entrées, sorties et réactions) sont représentées par des cercles,
+tandis que les 9 relations de conservation de matière
+sont représentées par des flèches entre les inconnues.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\textwidth]{img/flows_matter}
+    \caption{
+        Procédé de production du point de vue de la matière.
+        On remarque que les relations d'équilibres s'appliquent après que les deux
+        réactions du reformage primaire aient eu lieu.
+    }
+    \label{fig:flows-matter}
+\end{figure}
+
+\subsection{Expression des équations}
+
+Maintenant que nous nous sommes assurés que le système est résolvable,
+il faut exprimer les différentes équations.
+
+\subsubsection{Non-accumulation des espèces}
+
+Nous allons commencer par les 9 équations de non-accumulation des composés.
+
+Prenons pour commencer l'exemple du \ce{CH4}.
+On peut voir sur le flow-sheet (figure~\ref{fig:flows-matter}) que le \ce{CH4}:
+\begin{itemize}
+    \item entre au début du procédé, à un débit $\mbox{in}_\ce{CH4}$,
+    \item est consommé par la réaction A, à un débit $\alpha$,
+    \item et le reste est consommé par la réaction C, à un débit $2\gamma$%
+        \footnote{Le 2 ici provient du coefficient stœchiométrique du \ce{CH4}}.
+\end{itemize}
+
+Dès lors, en appliquant la relation générale de non-accumulation:
+\begin{equation}
+    \mbox{entrée} + \mbox{production} = \mbox{sortie} + \mbox{consommation}
+\end{equation}
+
+On obtient la relation liée au \ce{CH4}:
+\begin{equation*}
+    \mbox{in}_\ce{CH4} \quad + \quad 0 \quad
+    = \quad 0 \quad + \quad \alpha + 2\gamma
+\end{equation*}
+
+Prenons ensuite l'exemple du \ce{CO2}.
+On peut voir sur le flow-sheet que le \ce{CO2}
+\begin{itemize}
+    \item est produit par la réaction B, à un débit $\beta$,
+    \item est produit par la réaction D, à un débit $\delta$.
+    \item sort du procédé au niveau de la séparation,
+        à un débit $\mbox{out}_\ce{CO2}$.
+\end{itemize}
+
+En appliquant la relation générale, on obtient celle liée au \ce{CO2}:
+\begin{equation*}
+    0 \quad + \quad \beta + \delta \quad
+    = \quad \mbox{out}_\ce{CO2} \quad + \quad 0
+\end{equation*}
+
+Les autres relations de non-accumulation s'obtiennent de manière similaire,
+et sont recueillies dans ce système:
+\begin{equation}
+    \label{eq:non-accu}
+    \left\{
+    \begin{array}{rcll}
+        \mbox{in}_\ce{CH4} &=& \alpha + 2\gamma
+            & \mbox{(\ce{CH4})}\\
+        \mbox{in}_\ce{H2O} &=& \mbox{out}_\ce{H2O} + \alpha + \beta + \delta
+            & \mbox{(\ce{H2O})}\\
+        3\alpha + \beta + 4\gamma + \delta &=& 3\epsilon
+            & \mbox{(\ce{H2})}\\
+        \alpha + 2\gamma &=& \beta + \delta
+            & \mbox{(\ce{CO})}\\
+        \beta + \delta &=& \mbox{out}_\ce{CO2}
+            & \mbox{(\ce{CO2})}\\
+        21\% \times \mbox{in}\ind{air} &=& \gamma
+            & \mbox{(\ce{O2})}\\
+        78\% \times \mbox{in}\ind{air} &=& \epsilon
+            & \mbox{(\ce{N2})}\\
+        1\% \times \mbox{in}\ind{air} &=& \mbox{out}_\ce{Ar}
+            & \mbox{(\ce{Ar})}\\
+        2\epsilon &=& \mbox{out}_\ce{NH3}
+            & \mbox{(\ce{NH3})}\\
+    \end{array}
+    \right.
+\end{equation}
+
+Remarquons qu'il s'agit là d'équations linéaires et homogènes.
+
+\subsubsection{Débit de sortie de \ce{NH3}}
+
+Considérons maintenant le deuxième type d'équation,
+celui qui lie la sortie en \ce{NH3} à la production imposée par l'utilisateur
+de l'usine de production. Elle s'exprime simplement:
+\begin{equation}
+    \mbox{out}_\ce{NH3} = \mbox{production de \ce{NH3}}
+\end{equation}
+Il s'agit d'une équation linéaire non-homogène.
+
+\subsubsection{Relations d'équilibre}
+
+Pour exprimer les relations d'équilibre, nous considérons que la fin
+du réformeur primaire est constamment à l'équilibre.
+Par conséquent, les relations d'équilibres, qui s'expriment selon
+les rapports de concentration à l'équilibre, peuvent aussi s'exprimer selon
+les rapports des débits sortants.
+
+Pour simplifier les expressions, nous introduisons les variables suivantes,
+qui correspondent aux débits des composés sortant du réformeur primaire.
+\begin{equation}
+    \label{eq:def-eq-flows}
+    \left\{
+    \begin{array}{lcl}
+        \mbox{éq}_\ce{CH4} &=& \mbox{in}_\ce{CH4} - \alpha \\
+        \mbox{éq}_\ce{H2O} &=& \mbox{in}_\ce{H2O} - \alpha - \beta \\
+        \mbox{éq}_\ce{H2} &=& 3\alpha + \beta \\
+        \mbox{éq}_\ce{CO} &=& \alpha - \beta \\
+        \mbox{éq}_\ce{CO2} &=& \beta \\
+    \end{array}
+    \right.
+\end{equation}
+
+Ensuite, nous supposons connues les constantes d'équilibre
+$K\ind{A}$ et $K\ind{B}$
+des réactions A et B.
+Exprimons d'abord les équations en fonction des activités:
+\begin{equation}
+    \left\{
+    \begin{array}{ccccc}
+        K\ind{A} &=& \frac{a_\ce{H2}^3\,a_\ce{CO}}{a_\ce{CH4}\,a_\ce{H2O}}
+            &=& \frac{p_\ce{H2}^3\,p_\ce{CO}}{p_\ce{CH4}\,p_\ce{H2O}}
+        \\[1em]
+        K\ind{B} &=& \frac{a_\ce{H2}\,a_\ce{CO2}}{a_\ce{H2O}\,a_\ce{CO}}
+            &=& \frac{p_\ce{H2}\,p_\ce{CO2}}{p_\ce{H2O}\,p_\ce{CO}}
+    \end{array}
+    \right.
+\end{equation}
+
+Ensuite, exprimons les pressions partielles selon la pression totale
+$p\ind{tot}$ et le nombre de moles total $\mbox{éq}\ind{tot}$
+\begin{equation*}
+    \left\{
+    \begin{array}{ccc}
+        K\ind{A} &=&
+            \frac{(\mboxs{éq}_\ce{H2} \,/\, \mboxs{éq}\indt{tot})^3 \ 
+            (\mboxs{éq}_\ce{CO} \,/\, \mboxs{éq}\indt{tot}) \ \times\ 
+            (p\ind{tot}\,/\,p\ind{ref})^4}
+            {(\mboxs{éq}_\ce{CH4} \,/\, \mboxs{éq}\indt{tot}) \ 
+            (\mboxs{éq}_\ce{H2O} \,/\,\mboxs{éq}\indt{tot}) \ \times\ 
+            (p\ind{tot}\,/\,p\ind{ref})^2}
+        \\[1em]
+        K\ind{B} &=&
+            \frac{(\mboxs{éq}_\ce{H2} \,/\, \mboxs{éq}\indt{tot}) \ 
+            (\mboxs{éq}_\ce{CO2} \,/\, \mboxs{éq}\indt{tot}) \ \times\ 
+            (p\ind{tot}\,/\,p\ind{ref})^2}
+            {(\mboxs{éq}_\ce{H2O} \,/\, \mboxs{éq}\indt{tot}) \ 
+            (\mboxs{éq}_\ce{CO} \,/\,\mboxs{éq}\indt{tot}) \ \times\ 
+            (p\ind{tot}\,/\,p\ind{ref})^2}
+    \end{array}
+    \right.
+\end{equation*}
+
+Ou encore:
+\begin{equation}
+    \label{eq:equi_final}
+    \left\{
+    \begin{array}{ccccc}
+        K\ind{A}\,/\,(p\ind{tot}\,/\,p\ind{ref})^2
+            &=& \frac{\mboxs{éq}_\ce{H2}^3\,\mboxs{éq}_\ce{CO}}
+            {\mboxs{éq}_\ce{CH4}\,\mboxs{éq}_\ce{H2O}\,\mboxs{éq}\indt{tot}^2}
+            &=& K_{\mboxs{A},\,p\indt{tot}}
+        \\[1em]
+        K\ind{B} 
+            &=& \frac{\mboxs{éq}_\ce{H2}\,\mboxs{éq}_\ce{CO2}}
+            {\mboxs{éq}_\ce{H2O}\,\mboxs{éq}_\ce{CO}}
+            &=& K_{\mboxs{B},\,p\indt{tot}}
+    \end{array}
+    \right.
+\end{equation}
+
+Les constantes d'équilibre adaptées à la pression, $K_{\mboxs{A},\,p\indt{tot}}$
+et $K_{\mboxs{B},\,p\indt{tot}}$ peuvent être calculées à partir de
+la température $T$ et la pression $p\ind{tot}$ avant de commencer à résoudre
+les équations liant les débits molaires.
+
+Ces équations ne sont pas linéaires.
+
+\subsection{Résolution des équations}
+
+La méthode de résolution des équations a été déterminée par le type des équations.
+Pour rappel:
+\begin{itemize}
+    \item les neuf équations de non-accumulation sont linéaires et homogènes;
+    \item l'équation qui impose le débit de sortie de \ce{NH3} est linéaire et non-homogène;
+    \item les équations d'équilibre ne sont pas linéaires.
+\end{itemize}
+
+Elles sont ici triées dans l'ordre de difficulté croissante.
+Nous avons décidé dans notre programme de les résoudre dans cet ordre.
+
+\subsubsection{Résolution des équations homogènes}
+
+Pour rappel les équations liées à la non-accumulation des espèces
+\eqref{eq:non-accu}
+sont un système de 9 équations pour 12 inconnues,
+avec $12-9=3$ degrés de liberté.
+On peut donc exprimer leurs solutions sous la forme $av_1 + bv_2 + cv_3$
+où $a$, $b$ et $c$ sont des paramètres de débit inconnus,
+et où $v_1$, $v_2$ et $v_3$ sont des vecteurs de taille $12\times 1$,
+qui correspondent aux degrés de libertés du système.
+
+En pratique, nous obtenons:
+\begin{equation}
+    \label{eq:param-flows}
+    \left(
+    \begin{array}{c}
+        \mbox{in}_\ce{CH4} \\
+        \mbox{in}_\ce{H2O} \\
+        \mbox{in}\ind{air} \\
+        \mbox{out}_\ce{H2O} \\
+        \mbox{out}_\ce{CO2} \\
+        \mbox{out}_\ce{Ar} \\
+        \mbox{out}_\ce{NH3} \\
+        \alpha \\
+        \beta \\
+        \gamma \\
+        \delta \\
+        \epsilon \\
+    \end{array}
+    \right)
+    \ =\ 
+    a\,
+    \left(
+    \begin{array}{c}
+         0\\ 1\\ 0\\ 1\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\
+    \end{array}
+    \right)
+    \ +\ b\,
+    \left(
+    \begin{array}{c}
+        0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ 0\\ -1\\ 0\\ 1\\ 0\\
+    \end{array}
+    \right)
+    \ +\ c\,
+    \left(
+    \begin{array}{c}
+        0.885\\ 1.231\\ 1.282\\ 0\\ 0.885\\ 0.013\\ 2\\ 0.346\\ 0.885\\ 0.269\\ 0\\ 1\\
+    \end{array}
+    \right)
+\end{equation}
+
+Ces vecteurs peuvent être interprétés comme suit:
+\begin{itemize}
+    \item $v_1$ contient des $1$ au niveau de l'entrée et de la sortie d'eau.
+        L'explication est simple: on peut faire entrer plus d'eau dans
+        le système si on l'enlève par après.
+    \item $v_2$ contient un $-1$ pour $\beta$ et un $1$ pour $\delta$,
+        les degrés d'avancement des réactions B et D.
+        Cela s'explique en observant que ces deux réactions
+        ont la même équation chimique, même si elles se produisent à deux étapes
+        différentes:
+        \begin{center}\ce{CO + H2O <-> CO2 + H2}\end{center}
+        
+        Dès lors, la première peut avancer moins ($\beta$ peut diminuer)
+        à condition que la deuxième avance plus
+        (à condition que $\delta$ augmente).
+    \item $v_3$ contient une valeur non-nulle dans la ligne de l'ammoniac.
+        Il décrit une solution particulière pour la production d'une certaine
+        quantité d'ammoniac,
+        avec toutes les quantités de réactifs et produits qui y sont liés.
+\end{itemize}
+
+Cette étape est effectuée par la fonction \texttt{param\_moles}
+dans notre outil de gestion,
+qui renvoie les trois vecteurs $v_1$, $v_2$ et $v_3$.
+Elle les détermine en observant qu'il s'agit d'une base de l'espace annulateur
+de la matrice des coefficients du système:
+\begin{equation}
+    A\ =\
+    \left(
+    \begin{array}{ccc|cccc|ccccc}
+        1&  0&  0&   0&  0&  0&  0&  -1&  0& -2&  0&  0\\ % CH4
+        0&  1&  0&  -1&  0&  0&  0&  -1& -1&  0& -1&  0\\ % H2O
+        0&  0&  0&   0&  0&  0&  0&   3&  1&  4&  1& -3\\ % H2
+        0&  0&  0&   0&  0&  0&  0&   1& -1&  2& -1&  0\\ % CO
+        0&  0&  0&   0& -1&  0&  0&   0&  1&  0&  1&  0\\ % CO2
+        0&  0&.21&   0&  0&  0&  0&   0&  0& -1&  0&  0\\ % O2
+        0&  0&.78&   0&  0&  0&  0&   0&  0&  0&  0& -1\\ % N2
+        0&  0&.01&   0&  0& -1&  0&   0&  0&  0&  0&  0\\ % Ar
+        0&  0&  0&   0&  0&  0& -1&   0&  0&  0&  0&  2\\ % NH3
+    \end{array}
+    \right)
+\end{equation}
+les trois premières colonnes correspondent à
+$\mbox{in}_\ce{CH4}$,
+$\mbox{in}_\ce{H2O}$ et
+$\mbox{in}\ind{air}$;
+les quatres suivantes à
+$\mbox{out}_\ce{H2O}$,
+$\mbox{out}_\ce{CO2}$,
+$\mbox{out}_\ce{Ar}$ et
+$\mbox{out}_\ce{NH3}$;
+et les cinq dernières à
+$\alpha$,
+$\beta$,
+$\gamma$,
+$\delta$ et
+$\epsilon$.
+
+\subsubsection{Imposition du débit de sortie}
+
+Maintenant que l'on a trouvé les vecteurs $v_1$, $v_2$ et $v_3$,
+on impose que la sortie de \ce{NH3} soit égale à la valeur entrée.
+
+Dans notre cas, cela détermine donc le paramètre $c$.
+En effet, le coefficient de $\mbox{out}_\ce{NH3}$ est nul dans $v_1$ et $v_2$,
+tandis qu'il vaut 2 dans $v_3$, ce qui veut dire que:
+\begin{equation*}
+    \mbox{out}_\ce{NH3} = 2c
+\end{equation*}
+
+Puisque $\mbox{out}_\ce{NH3}$ correspond à la production de \ce{NH3} imposée
+par l'utilisateur, on a finalement:
+\begin{equation}
+    c\ =\ \mbox{production de \ce{NH3}} \ /\ 2
+\end{equation}
+
+Ceci est la première de la fonction \texttt{solve\_equi}
+dans notre outil de gestion.
+
+\subsubsection{Résolution des relations d'équilibre}
+
+Il nous reste maintenant à trouver $a$ et $b$,
+en exprimant les deux relations d'équilibre selon ces deux derniers paramètres.
+
+Pour cela, nous exprimons d'abord les débits molaires à la sortie du
+réacteur de réformage
+$\mbox{éq}_\ce{CH4}$, $\mbox{éq}_\ce{H2O}$, $\mbox{éq}_\ce{H2}$,
+$\mbox{éq}_\ce{CO}$ et $\mbox{éq}_\ce{CO2}$ en fonction de $a$ et de $b$.
+On peut faire ça en injectant les solutions paramétriques
+de l'équation \eqref{eq:param-flows}
+dans les expressions de ces flux de sortie
+de l'équation \eqref{eq:def-eq-flows}. C'est ce que fait la fonction
+\texttt{param\_moles\_eq}.
+
+Ensuite, nous réinjectons ces expressions dans les équations
+\eqref{eq:equi_final}, et nous utilisons la librairie symbolique de \MATLAB{}
+pour trouver $a$ puis $b$.
+
+Une fois ces paramètres $a$, $b$ et $c$ calculés,
+nous pouvons déduire directement les débits d'entrée, de sortie et les degrés
+d'avancement (ce qui est fait dans \texttt{moles});
+et de là tous les débits molaires du procédé.
+
+Une fois ceux-là obtenus, nous pouvons déduire tous
+les débits massiques,
+et les puissances produites ou absorbées par chacune des réactions.
+C'est le rôle de la fonction \texttt{masses\_and\_heat}.
+Elle prend en paramètre la température du réformeur primaire, en kelvins,
+et le débit massique de \ce{NH3} à produire, en \kilogram\per\second.%
+\footnote{Ou dans n'importe quelle autre unité de masse par temps.
+Les valeurs retournées seront exprimées dans la même unité. Magique, non?}
+
+\section{Bilan d'énergie}
+
+Nous allons maintenant déterminer la quantité de \ce{CH4} qu’il nous faut introduire
+dans le four afin de produire l’énergie nécessaire aux réactions
+au niveau du reformage primaire pour une quantité de moles demandée.
+
+Tout d’abord, les réactions au sein de ce réacteur sont globalement endothermiques.
+Elles ont donc besoin de recevoir une certaine quantité d’énergie
+déterminée par leurs enthalpies de réaction respectives.
+La combustion quant à elle est exothermique et c’est elle qui va fournir cette énergie.
+Nous prenons également en compte que le rendement énergétique du four est de 75\%.
+
+On peut donc exprimer la conservation d'énergie:
+$$\alpha*\Delta H_1 + \beta*\Delta H_2 + \frac{75}{100}*\xi*\Delta H\ind{four} = 0$$
+où $\alpha$, $\beta$ et $\xi$ sont les degrés d'avancement en $\mole\per\jour$,
+et $\Delta H_1$, $\Delta H_2$ et $\Delta H\ind{four}$ les enthalpies molaires en
+$\joule\per\mole$ des trois réactions.
+Les degrés d'avancement $\alpha$ et $\beta$ ont été calculées
+au préalable pour la quantité d’ammoniac désirée.
+
+\subsection{Calcul des différentes enthalpies à une température $T$}
+
+Pour calculer les différences d'enthalpie des différents composés,
+nous utilisons une des formes de l'équation de Shomate \cite{nist}:
+$$\Delta H(t) = A\,t + B\,\frac{t^2}{2} + C\,\frac{t^3}{3}
++ D\,\frac{t^4}{4} - E\,\frac{1}{t} + F$$
+où $A$, $B$, $C$, $D$, $E$ et $F$ sont des coefficients
+%\footnote{Ces coefficients se retrouvent dans l'annexe}
+qui dépendent du composé en question et où $t=\frac{T(\kelvin)}{1000}$.
+Cette équation donne la différence d'enthalpie entre le composé à la température $T$
+et sa forme élémentaire à une température standard $T\ind{ref} = 298.15\,\kelvin$.
+
+\subsubsection{Réactions reformage primaire}
+
+Nous allons considérer ici que les réactifs et les produits sont tous les deux
+à une température $T$ (avoisinant ici les $1000\,\kelvin$).
+
+\textbf{Réaction 1 :} \ce{CH4 + H2O -> CO + 3H2}
+\begin{equation*}
+\Delta H_1 (T) = 3*\Delta H_{\ce{H2}} (t)
++ \Delta H_{\ce{CO}} (t)
+- \Delta H_{\ce{CH4}} (t)
+- \Delta H_{\ce{H2O}} (t)
+\end{equation*}
+
+\textbf{Réaction 2 :} \ce{CO + H2O -> CO2 + H2}
+\begin{equation*}
+\Delta H_2 (T) = \Delta H_{\ce{CO2}} (t)
++ \Delta H_{\ce{H2}} (t)
+- \Delta H_{\ce{CO}} (t)
+- \Delta H_{\ce{H2O}} (t)
+\end{equation*}
+
+Chaque $\Delta H$ correspond à l’équation de Shomate
+avec les coefficients correspondant au composé en question.
+
+\subsubsection{Dans le four}
+
+Pour la combustion, nous allons considérer que nous apportons les réactifs
+à température ambiante, soit $298.15\,\kelvin$,
+et que les produits sortent à une température $T\ind{four}=1300\,\kelvin$.
+
+Pour établir le $\Delta H$ de cette réaction,
+il suffit une nouvelle fois d’appliquer l’équation de Shomate des produits à température T
+et d’y soustraire l’enthalpie de formation à température ambiante de chacun des réactifs,
+le tout pondéré par les coefficients stoechiométriques.
+
+\textbf{Réaction Four :} \ce{CH4 + 2O2 -> CO2 + 2H2O}
+\begin{equation*}
+\Delta H\ind{four}(T) = \Delta H_{\ce{CO2}} (T)
++ 2*\Delta H_{\ce{H2O}} (T)
+- \Delta H\ind{\ce{CH4}}(T)
+- 2*\Delta H\ind{\ce{O2}}(T)
+\end{equation*}
+
+\subsubsection{Cas pour une température particulière}
+
+Appliquons les formules explicitées ci-dessus pour les températures $T=1000\,\kelvin$
+dans le réacteur et $T\ind{four} = 1300\,\kelvin$ dans le four,
+pour se donner une idée des valeurs auxquelles s'attendre:
+$$\Delta H_1 (1000\,\kelvin) = 225.72\,\kilo\joule\per\mole$$
+$$\Delta H_2 (1000\,\kelvin) = -34.779\,\kilo\joule\per\mole$$
+$$\Delta H\ind{four} (1300\,\kelvin) = -802.26\,\kilo\joule\per\mole$$
+
+A présent, il nous reste à trouver le degré d'avancement $\xi$
+qui nous donnera les débits des réactifs et des produits de la combustion :
+$$\xi = \frac{\alpha * \Delta (H_1) + \beta * \Delta (H_2)}{-\Delta (H\ind{four})}*\frac{100}{75}$$
+où $\xi$ donnera le débit de \ce{CH4} et de \ce{CO2},
+2$\xi$ donnera le débit de \ce{O2} et de \ce{H2O}.
+
+Si l'on désire un débit de 1000 $\ton\per\jour$ d'ammoniac à la sortie,  nous obtenons, grâce à notre outil de gestion Matlab, que  $\alpha$, le degré d'avancement de la première réaction, vaut $1,0181\times10^4$ $\mole\per\jour$ et que $\beta$, le degré d'avancement de la seconde réaction, vaut $0,5918\times10^4$ $\mole\per\jour$.
+
+Enfin, pour obtenir le débit de réactifs à introduire dans le four,
+il suffira de multiplier chacun des flux par la masse molaire des composés respectifs :
+\begin{equation*}
+M_{\ce{CH4}}=16.0425\,\gram\per\mole \mbox{ et } M_{\ce{O2}}=31.9988\,\gram\per\mole
+\end{equation*}
+Ainsi, la quantité de \ce{CH4} à fournir au four est de $\xi \times M_{\ce{CH4}} = 55,7  \kilo\gram\per\jour$
+\\et la quantité de \ce{O2} à lui fournir est de $2\xi \times M_{\ce{O2}} = 222,1 \kilo\gram\per\jour$.
+
+\section{Analyse paramétrique}
+
+Tout ce que nous avons calculé et modélisé nous permet maintenant de faire une analyse paramétrique de notre système, pour voir son évolution en fonction de la température et de la quantité de \ce{NH3} désirée.
+
+Nous avons choisi de faire varier la température entre $900\,\kelvin$ et $1100\,\kelvin$, ce qui constitue une gamme des températures les plus probables, et tout ceci pour une même masse d'ammoniac synthétisé.
+
+Nous n'avons pas jugé utile de faire un graphique pour différentes masses de \ce{NH3} car les entrées et sorties sont proportionnelles à celles-ci, et un tel graphique n'aurait donc pas été très intéressant.
+
+Nous présentons nos résultats sur la figure~\ref{fig:graphe}. On peut observer sur ce graphique que seules les entrées et sorties de
+\ce{H2O} varient.
+En effet, toutes les autres entrées et sorties sont directement
+liées à la quantité de \ce{NH3} désirée.
+Celles-ci sont donc constantes sur notre graphique.
+
+On peut également observer que la sortie de \ce{H2O} devient négative
+à la température de $1045\,\kelvin$.
+Le système a en fait besoin, à partir de cette température,
+de plus d'eau dans le reformage secondaire. Mais, les hypothèses nous imposent de n'introduire de l'eau qu'au niveau du reformage primaire, la production de \ce{NH3} n'est donc plus possible à partir de cette température.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/graphe1}
+\caption{Graphique montrant l'évolution des masses d'entrée et de sortie en fonction de la température.}
+\label{fig:graphe}
+\end{center}
+\end{figure}
+
+\section{Nombre de tubes du réacteur}
+
+Dans cette partie, nous allons estimer le nombre de tubes opérés
+en parallèle pour apporter le méthane à l'entrée du réacteur de reformage primaire.
+
+L’énoncé nous indique que pour une capacité de $1500\,\ton\per\jour$ d’ammoniac,
+la vitesse superficielle à l’entrée du réacteur de reformage
+à vapeur de méthane est typiquement de $2\,\meter\per\second$.
+Nous savons que les tubes sont circulaires et leur diamètre est $10\,\centi\meter$.
+Nous prenons également pour les besoins du raisonnement
+une pression de $31\,\bbar$ et une température de $1000\,\kelvin$
+à l'endroit concerné.
+
+Pour commencer, nous pouvons aisément déduire le débit volumique pour un tube,
+comme le produit de la vitesse $c$, et de la section du tube $A$.
+Nous obtenons:
+\begin{equation*}
+\dot{V}\ind{tube} = c*A = 2\,\meter\per\second \times \pi(0.05\,\meter)^2
+= 0.0157\,\meter\cubed\per\second
+\end{equation*}
+
+Ensuite, pour connaître le débit molaire en \ce{CH4} et \ce{H20} à l'entrée, nous devons calculer le débit molaire de \ce{NH3} à la sortie
+à partir du débit massique $\dot{m} = 1500\,\ton\per\jour = 17.36\,\kilogram\per\second$.
+En divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
+on obtient un débit de:
+\begin{equation*}
+\dot{n}\ind{sortie} = \frac{\dot{m}}{M_{\ce{NH3}}}
+= \frac{17.36\,\kilogram\per\second}{0.017\,\kilogram\per\mole}
+= 1021.18\,\mole\per\second
+\end{equation*}
+
+En utilisant la fonction \texttt{moles} de notre outil de gestion,
+nous déterminons les débits molaires à l'entrée du réacteur:
+\begin{equation*}
+\dot{n}\ind{entrée} =  \dot{n}\ind{\ce{CH4}}+ \dot{n}\ind{\ce{H2O}}=451.7\,\mole\per\second + 890.4\,\mole\per\second = 1342.1 \,\mole\per\second
+\end{equation*}
+
+Maintenant, calculons le débit volumique total, $\dot{V}$.
+Appliquons pour cela la loi des gaz parfaits:
+\begin{equation*}
+\dot{V} = \frac{\dot{n}\ind{entrée}RT}{p} = 3.60\,\meter\cubed\per\second
+\end{equation*}
+
+Pour finir, nous pouvons déterminer
+le nombre de tubes nécessaire avec la relation suivante:
+\begin{equation*}
+\frac{\dot{V}}{\dot{V}\ind{tube}}
+= \frac{1.211\,\meter\cubed\per\second}{0.0157\,\meter\cubed\per\second} = 229.26
+\end{equation*}
+
+Nous concluons donc qu'environ 230 tubes seront nécessaires pour apporter le méthane
+dans le réacteur de reformage primaire.
+
+\section{Outil de gestion}
+
+L'outil de gestion est fourni sous la forme d'un archive ZIP à côté de ce PDF.
+La fonction à utiliser est \texttt{masses\textunderscore and\textunderscore heat},
+qui prend simplement en paramètre la température en kelvin et le débit
+de \ce{NH3} en \kilogram\per\second.
+
+Nous avons développé une ébauche d'interface pour cette fonction,
+mais nous préférons reporter sa publication à un moment du projet où nous aurons
+une meilleure idée des besoins du projet.
