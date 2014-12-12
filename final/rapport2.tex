@@ -2,7 +2,7 @@
 
 \section{Introduction}
 
-Notre sujet d'étude étant la production d’ammoniac, en commençant par la synthèse de celui-ci à partir du reformage, il nous a été nécessaire de passer par l’étape de la gestion du plant. Ce rapport présente donc nos calculs et codes MATLAB du bilan de matière, en fonction de la température dans le réacteur et de la quantité d’ammoniac produite, du bilan d’énergie et finalement le calcul du nombre de tubes nécessaires à l’entrée des différents réactifs. 
+Notre sujet d'étude étant la production d’ammoniac, en commençant par la synthèse de celui-ci à partir du reformage, il nous a été nécessaire de passer par l’étape de la gestion du plant. Ce rapport présente donc nos calculs et codes \matlab{} du bilan de matière, en fonction de la température dans le réacteur et de la quantité d’ammoniac produite, du bilan d’énergie et finalement le calcul du nombre de tubes nécessaires à l’entrée des différents réactifs. 
 
 \section{Flow-sheet rempli}
 
@@ -426,7 +426,7 @@ de l'équation \eqref{eq:def-eq-flows}. C'est ce que fait la fonction
 \texttt{param\_moles\_eq}.
 
 Ensuite, nous réinjectons ces expressions dans les équations
-\eqref{eq:equi_final}, et nous utilisons la librairie symbolique de \MATLAB{}
+\eqref{eq:equi_final}, et nous utilisons la librairie symbolique de \matlab{}
 pour trouver $a$ puis $b$.
 
 Une fois ces paramètres $a$, $b$ et $c$ calculés,
@@ -533,7 +533,7 @@ $$\xi = \frac{\alpha * \Delta (H_1) + \beta * \Delta (H_2)}{-\Delta (H\ind{four}
 où $\xi$ donnera le débit de \ce{CH4} et de \ce{CO2},
 2$\xi$ donnera le débit de \ce{O2} et de \ce{H2O}.
 
-Si l'on désire un débit de 1000 $\ton\per\jour$ d'ammoniac à la sortie,  nous obtenons, grâce à notre outil de gestion Matlab, que  $\alpha$, le degré d'avancement de la première réaction, vaut $1,0181\times10^4$ $\mole\per\jour$ et que $\beta$, le degré d'avancement de la seconde réaction, vaut $0,5918\times10^4$ $\mole\per\jour$.
+Si l'on désire un débit de 1000 $\ton\per\jour$ d'ammoniac à la sortie,  nous obtenons, grâce à notre outil de gestion \matlab, que  $\alpha$, le degré d'avancement de la première réaction, vaut $1,0181\times10^4$ $\mole\per\jour$ et que $\beta$, le degré d'avancement de la seconde réaction, vaut $0,5918\times10^4$ $\mole\per\jour$.
 
 Enfin, pour obtenir le débit de réactifs à introduire dans le four,
 il suffira de multiplier chacun des flux par la masse molaire des composés respectifs :
