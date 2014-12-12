@@ -75,6 +75,9 @@ p_oven_out = uiextras.Panel('Parent', l_oven, 'Title', 'Products');
 t_oven_out = uitable('Parent', p_oven_out, 'ColumnName', display_fields,'RowName',display_components_oven_out);
 
 
+panel_others = uiextras.Panel('Parent', f_layout, 'Title', 'Others');
+l_others = uiextras.VBox('Parent', panel_others);
+nb_pipes = uicontrol('Parent', l_others,'Style','text');
 
 
 %  Initialization tasks
@@ -98,8 +101,8 @@ update();
         
         [m_reac, m_oven, q_reac] = masses_and_heat(T, m_NH3);
         
-        m_NH3 = to_kgs(m_NH3);
-        n_NH3=m_NH3/0.017;
+        m_NH3_2 = to_kgs(m_NH3);
+        n_NH3=m_NH3_2/0.017;
         
         [n_reac, n_oven] = moles(T, n_NH3);
         
@@ -151,6 +154,11 @@ update();
         end
         
         set(t_oven_out, 'Data', D2);
+        
+      
+  
+        set(nb_pipes, 'String', sprintf('Number of pipes at entry of primary reforming : %d',...
+            number_pipes(T, m_NH3)));
         
     end
 end
