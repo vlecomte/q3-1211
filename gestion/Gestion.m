@@ -5,7 +5,10 @@ function Gestion()
 %Initialization tasks
 
 %Construct the components
-fh = figure('MenuBar', 'none', 'Name', 'Management tool for ammonia production plant','NumberTitle', 'off','Position', [100, 100, 600, 400]);
+fh = figure('MenuBar', 'none', ...
+    'Name', 'Management tool for ammonia production plant', ...
+    'NumberTitle', 'off', ...
+    'Position', [100, 100, 600, 500]);
 
 f_layout = uiextras.VBox('Parent', fh);
 

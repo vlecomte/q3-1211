@@ -29,7 +29,7 @@ A = [
 % As there are 12 variables and 9 equations, the solution is of
 % the form a*v1 + b*v2 + c*v3 with a,b,c flux parameters in [mol/s].
 % n is the matrix [v1 v2 v3].
-n = null(A, 'r')
+n = null(A, 'r');
 
 % The three resulting vectors can be interpreted as follows:
 % - v1: you can add water at in2, as long as you drain as much at out1;
