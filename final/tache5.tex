@@ -51,9 +51,10 @@ correspondant à $15\,\barg$ est de:
 Étant donné que seule de la vapeur d'ammoniac
 va quitter le tank à travers la soupape,
 nous considérons l'équation pour une phase gazeuse pure:
-\begin{equation*}
+\begin{equation}
+    \label{eq:big-surface}
     A=\frac{W}{CK_dP_1K_bK_c} \sqrt{\frac{TZ}{M}}
-\end{equation*}
+\end{equation}
 
 \quest{Surface exposée aux flammes}
 Pour calculer la surface de contact,
@@ -66,35 +67,82 @@ qui est composée d'une partie sphérique et d'une partie cylindrique:
 \begin{equation*}
     A\ind{ws} = A\ind{hémisphère} + A\ind{cylindre}
     = 4\pi r^2/2 + 2\pi r (h-r)
-    = \mbox{valeur chiffrée}
+    = 144\,\meter\squared
 \end{equation*}
 
 \quest{Chaleur absorbée}
 La chaleur absorbée est définie par l'équation suivante:
-\begin{equation*}
+\begin{equation}
     Q = C_1 F A\ind{ws}^{0.82}
+\end{equation}
+où $C_1$ est une constante définie à $43200\,\watt\per\meter\squared$, et $F$ est un facteur
+d'environnement. Dans notre cas, le tank n'étant pas isolé,
+ce facteur vaut $1$. Nous avons donc:
+\begin{equation*}
+    Q = 43200\,\watt\per\meter\squared \times 1 \times 144\,\meter\squared
+    = 2.54\,\mega\watt
 \end{equation*}
 
-On connait W grâce à la formule : $W=\frac{Q}{dH}$.
+\quest{Débit sortant}
+On connait le débit de gaz sortant $W$ grâce à la formule:
+\begin{equation}
+    W=\frac{Q}{\Delta H\ind{vap}}
+\end{equation}
+où $\Delta H\ind{vap}$ est l'enthalpie de vaporisation de l'ammoniac,
+en $\joule\per\kilogram$.
+En effet, il faut faire en sorte que la vapeur puisse sortir au rythme auquel
+elle est créée par l'apport de chaleur.
+On trouve une enthalpie de vaporisation de $1150\,\kilo\joule\per\kilogram$
+en reportant la température sur le graphe.
+Dès lors:
+\begin{equation*}
+    W = \frac{2.54\,\mega\watt}{1.15\,\mega\joule\per\kilogram}
+    = 7.94\cdot10^3\,\kilogram\per\hour
+\end{equation*}
 
-Or,
+\quest{Section de la soupape}
+Il nous suffit maintenant d'appliquer la formule \eqref{eq:big-surface}.
+Les différentes constantes sont déterminées comme ça.
+\begin{itemize}
+    \item $C$ est déterminée par l'équation
+        \begin{equation}
+            C = 0.03948\,\sqrt{k\left(\frac{2}{k+1}\right)^\frac{k+1}{k-1}}
+        \end{equation}
+        où $k$ est le rapport de chaleurs spécifiques $c_p/c_v$ de l'ammoniac;
+        $C$ n'est pas adimensionnel mais les unités ne sont pas précisées;
+    \item $K_d$ est le coefficient de décharge, défini à $0.975$;
+    \item $P_1$ est la pression de décharge;
+    \item $K_b$ vaut 1 pour les soupapes non équilibrées;
+    \item $K_c$ vaut 1 pour les soupapes sans disque de rupture;
+    \item $T$ est la température de décharge, en $\kelvin$;
+    \item $Z$ est un facteur de compressibilité, défini dans l'énoncé à 1;
+    \item $M$ est la masse molaire de l'ammoniac, en $\kilogram\per\kilo\mole$.
+\end{itemize}
+Cela donne une valeur:
+\begin{equation*}
+    \begin{aligned}
+        A &= \frac{7.94\cdot10^3\,\kilogram\per\hour}
+        {0.0266 \times 0.975 \times 16\bbar \times 1 \times 1}\,
+        \sqrt{\frac{(273.15+40)\,\kelvin \times 1}{17\,\kilogram\per\kilo\mole}}
+        \\
+        &= 680\,\milli\meter\squared = 1.05\,\inch\squared
+    \end{aligned}
+\end{equation*}
 
-Grâce à un tableau donné dans les slides, on sait que le facteur environnemental est de 1, car on est dans le cas 'bare vessel'.
-
-On obtient alors, avec toutes les données des slides et de l'énoncé : 
-
-$$W=7,3674 . 10^{0.003} kg/hr$$
-
-$$\Rightarrow A=680.1862mm^2=1.0543 inch^2$$
-
-En regardant ensuite dans le tableau des soupapes standard, on a sélectionné la soupape J.
+\quest{Choix de la soupape}
+En regardant ensuite dans le tableau des soupapes standard,
+on a sélectionné la taille de soupape J, qui a une aire
+effective de $1.287\,\inch\squared$.
 
 \quest{Si la pression de design de l'équipement était de 20barg, quel serait l’effet d’augmenter la pression de tarage de 5 bar et de la porter à 20 barg ?}
-Il faudrait alors prendre une autre soupape. Pour une pression de 20barg, on obtient sur le graphe une température de $50 \celsius$ et une enthalpie de $1100 kJ/kg$. En refaisant les calculs, on obtient :
-
-$$A=550.3761mm^2=0.8531inch^2$$
-
-On doit donc de nouveau prendre une soupape J.
+En refaisant les calculs pour une pression de $20\,\barg$, on obtient sur
+les graphes une température de $50\,\celsius$
+et une enthalpiede vaporisation de $1100\,\kilo\joule\per\kilogram$.
+En refaisant les calculs, on obtient alors:
+\begin{equation*}
+    A = 550\,\milli\meter\squared = 0.853\,\inch\squared
+\end{equation*}
+On doit donc de nouveau prendre une soupape de type J.
 
 \section{Influence de l'isolation}
 \quest{Pour la première pression de tarage, quelle est l’influence d’isoler thermiquement le tank avec un isolant tel que le coefficient d’échange avec l’extérieur soit réduit à une valeur de $\mathbf{10\ W/m^2\,K}$ ?}

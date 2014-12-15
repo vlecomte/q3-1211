@@ -1,3 +1,7 @@
+% set_pressure is in [barg]
+% T_celsius is in [degree celsius]
+% dH is in [kJ/kg]
+% env_f is dimensionless
 function [A] = gauge_surface(set_pressure, T_celsius, dH, env_F)
 
 k = 1.33; % Cp/Cv for NH3
@@ -24,6 +28,7 @@ display(wetted_surface);
 
 C1 = 43200; % defined, SI
 Q = C1 * env_F * wetted_surface^0.82; % formula
+display(Q);
 W = Q / (dH*1000) * 3600; % W is in [kg/hr], dH was in [kJ/kg]
 display(W);
 
