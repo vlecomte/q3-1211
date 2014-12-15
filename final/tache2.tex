@@ -3,6 +3,7 @@
 Dans cette tâche, il nous est demandé d'étudier la dernière étape
 du procédé, c'est-à-dire la synthèse de l'ammoniac à partir de
 gaz de synthèse, formé d'azote, d'hydrogène et d'argon.
+Cette réaction est la réaction E sur la figure~\ref{fig:flowsheet2}.
 
 Nous allons d'abord étudier les taux de conversion que nous pouvons obtenir
 de façon théorique
@@ -22,6 +23,32 @@ ont faussé nos calculs théoriques, et comment il serait encore possible
 d'améliorer la modélisation en prenant d'autres facteurs en considération.
 
 \section{Approche théorique}
+
+Dans cette sections nous allons étudier le processus de réaction-séparation
+avec \matlab{}, d'abord sans recyclage, puis avec recyclage.
+
+\subsection{Réaction seule}
+
+Commençons donc par estimer le rendement que nous pourrions obtenir
+sur cette dernière réaction:
+\begin{center}
+    \ce{N2 + 3H2 -> 2NH3}
+\end{center}
+Jusqu'à présent, dans la tâche 1, nous avions
+considéré cette réaction comme complète.
+Il faut donc maintenant résoudre les relations d'équilibre,
+et étudier le résultat en fonction de la température et de la pression.
+
+Pour cela, nous allons procéder comme pour les réactions du reformage primaire
+en section~\ref{ssec:expr-eq}.
+Soit $K\ind{E}$ la constante d'équilibre
+de cette réaction. On a alors la relation:
+\begin{equation}
+    K\ind{E} = \frac{a_\ce{NH3}^2}{a_\ce{N2}\,a_\ce{H2}^3}
+    = \frac{p_\ce{NH3}^2}{p_\ce{N2}\,p_\ce{H2}^3}
+\end{equation}
+
+\subsection{Recyclage des réactifs}
 
 \section{Modélisation avec \aspen}
 
