@@ -75,7 +75,8 @@ La chaleur absorbée est définie par l'équation suivante:
 \begin{equation}
     Q = C_1 F A\ind{ws}^{0.82}
 \end{equation}
-où $C_1$ est une constante définie à $43200\,\watt\per\meter\squared$, et $F$ est un facteur
+où $C_1$ est une constante définie à $43200\,\watt\per\meter\squared$,
+et $F$ est un facteur
 d'environnement. Dans notre cas, le tank n'étant pas isolé,
 ce facteur vaut $1$. Nous avons donc:
 \begin{equation*}
@@ -121,11 +122,11 @@ Les différentes constantes sont déterminées comme ça.
 Cela donne une valeur:
 \begin{equation*}
     \begin{aligned}
-        A &= \frac{7.94\cdot10^3\,\kilogram\per\hour}
-        {0.0266 \times 0.975 \times 16\bbar \times 1 \times 1}\,
+        A\ &=\ \frac{7.94\cdot10^3\,\kilogram\per\hour}
+        {0.0266 \times 0.975 \times 16\bbar \times 1 \times 1}\ 
         \sqrt{\frac{(273.15+40)\,\kelvin \times 1}{17\,\kilogram\per\kilo\mole}}
         \\
-        &= 680\,\milli\meter\squared = 1.05\,\inch\squared
+        &=\ 680\,\milli\meter\squared = 1.05\,\inch\squared
     \end{aligned}
 \end{equation*}
 
@@ -146,7 +147,19 @@ On doit donc de nouveau prendre une soupape de type J.
 
 \section{Influence de l'isolation}
 \quest{Pour la première pression de tarage, quelle est l’influence d’isoler thermiquement le tank avec un isolant tel que le coefficient d’échange avec l’extérieur soit réduit à une valeur de $\mathbf{10\ W/m^2\,K}$ ?}
-Cela changerait alors notre facteur environnemental, et donc la taille de la soupape. Isoler thermiquement le tank sera évidemment bénéfique, et cela est vérifié dans le tableau donné dans les slides : avec un tel isolant, notre facteur environnemental passe de 1.0 à 0.132. Il faudra donc utiliser une soupape plus petite. 
-
-Comme l'aire de l'orifice est directement proportionnelle à ce facteur, on obtient $A=89.7846mm^2=0.13921inch^2$.
-On peut donc sélectionner la soupape E.
+Cela changerait alors le facteur d'environnement $F$,
+et donc la taille de la soupape.
+Isoler thermiquement le tank sera évidemment bénéfique,
+et cela est vérifié dans les tables:
+avec une telle isolation, on obtient par proportionnalité $F=0.132$.%
+\footnote{En effet, un coefficient d'échange de
+$11.36\,\watt\per\meter\squared\,\kelvin$
+donnait un coefficient $F=0.15$.}
+Il faudra donc utiliser une soupape plus petite.
+Comme l'aire de l'orifice est directement proportionnelle à ce facteur, on obtient
+\begin{equation*}
+    A = 0.132 \times 680\,\milli\meter\squared
+    = 89.8\milli\meter\squared = 0.139\,\inch\squared
+\end{equation*}
+On peut donc sélectionner une soupape de type E,
+qui a une aire effective de $0.196\,\inch\squared$.
