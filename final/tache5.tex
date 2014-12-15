@@ -1,0 +1,104 @@
+\chapter{Tâche~5: Dimensionnement d'une soupape de sécurité}
+
+\section{Conditions initiales}
+\quest{Quelle est la pression normale de stockage?}
+La température normale de stockage est de $20\,\celsius$.
+Nous prenons donc la pression de vapeur
+correspondante sur le graphe, soit $8\,\barg$.
+La pression normale de stockage est alors simplement:
+\begin{equation*}
+    P\ind{stockage} = 8\,\barg = 9\,\bbar
+\end{equation*}
+
+\quest{Quelle sera la pression de stockage en été (à 30\,°C)?}
+En regardant sur le graphe de pression vapeur,
+on a cette fois une pression de $11\,\barg$.
+La pression de stockage vaut donc:
+\begin{equation*}
+    P\ind{stockage} = 11\,\barg = 12\,\bbar
+\end{equation*}
+
+\section{Conditions en décharge}
+\quest{Quelle sera la pression maximale de tarage de la soupape de sécurité ?}
+La pression de design est de $15\,\barg$,
+et il n'y a pas de contre-pression.
+Cela fait une différence de $16\,\bbar$ au niveau de la soupape.
+Sachant que la pression de tarage ne peut pas être supérieure
+à la pression de design, sans information sur les marges de sécurité,
+la pression maximale de tarage que l'on peut fixer est donc:
+\begin{equation*}
+    P\ind{tarage} = 16\,\bbar
+\end{equation*}
+
+\quest{Quelle sera la pression durant la décharge ?}
+Comme la contre-pression est nulle,
+la pression durant la décharge sera égale à la pression de tarage:
+
+\begin{equation*}
+    P\ind{décharge} = P\ind{tarage} = 16\,\bbar = 15\,\barg
+\end{equation*}
+
+\quest{Quelle sera la température du liquide
+durant la décharge via la soupape ?}
+En regardant sur le graphe de pression vapeur, on voit que la température
+correspondant à $15\,\barg$ est de:
+\begin{equation*}
+    T\ind{décharge} = 40\,\celsius
+\end{equation*}
+
+\section{Surface de section de la soupape}
+\quest{Quelle est la taille de la soupape nécessaire?}
+Étant donné que seule de la vapeur d'ammoniac
+va quitter le tank à travers la soupape,
+nous considérons l'équation pour une phase gazeuse pure:
+\begin{equation*}
+    A=\frac{W}{CK_dP_1K_bK_c} \sqrt{\frac{TZ}{M}}
+\end{equation*}
+
+\quest{Surface exposée aux flammes}
+Pour calculer la surface de contact,
+nous devons considérer la surface du tank qui est à la fois en contact
+avec de l'ammoniac liquide, et moins de $7.62\,\meter$ au-dessus des flammes.
+La niveau d'ammoniac étant de $8\,\meter$,
+la hauteur des flammes est le facteur limitant.
+Il suffit donc de calculer la surface du tank en dessous de $7.62\,\meter$,
+qui est composée d'une partie sphérique et d'une partie cylindrique:
+\begin{equation*}
+    A\ind{ws} = A\ind{hémisphère} + A\ind{cylindre}
+    = 4\pi r^2/2 + 2\pi r (h-r)
+    = \mbox{valeur chiffrée}
+\end{equation*}
+
+\quest{Chaleur absorbée}
+La chaleur absorbée est définie par l'équation suivante:
+\begin{equation*}
+    Q = C_1 F A\ind{ws}^{0.82}
+\end{equation*}
+
+On connait W grâce à la formule : $W=\frac{Q}{dH}$.
+
+Or,
+
+Grâce à un tableau donné dans les slides, on sait que le facteur environnemental est de 1, car on est dans le cas 'bare vessel'.
+
+On obtient alors, avec toutes les données des slides et de l'énoncé : 
+
+$$W=7,3674 . 10^{0.003} kg/hr$$
+
+$$\Rightarrow A=680.1862mm^2=1.0543 inch^2$$
+
+En regardant ensuite dans le tableau des soupapes standard, on a sélectionné la soupape J.
+
+\quest{Si la pression de design de l'équipement était de 20barg, quel serait l’effet d’augmenter la pression de tarage de 5 bar et de la porter à 20 barg ?}
+Il faudrait alors prendre une autre soupape. Pour une pression de 20barg, on obtient sur le graphe une température de $50 \celsius$ et une enthalpie de $1100 kJ/kg$. En refaisant les calculs, on obtient :
+
+$$A=550.3761mm^2=0.8531inch^2$$
+
+On doit donc de nouveau prendre une soupape J.
+
+\section{Influence de l'isolation}
+\quest{Pour la première pression de tarage, quelle est l’influence d’isoler thermiquement le tank avec un isolant tel que le coefficient d’échange avec l’extérieur soit réduit à une valeur de $\mathbf{10\ W/m^2\,K}$ ?}
+Cela changerait alors notre facteur environnemental, et donc la taille de la soupape. Isoler thermiquement le tank sera évidemment bénéfique, et cela est vérifié dans le tableau donné dans les slides : avec un tel isolant, notre facteur environnemental passe de 1.0 à 0.132. Il faudra donc utiliser une soupape plus petite. 
+
+Comme l'aire de l'orifice est directement proportionnelle à ce facteur, on obtient $A=89.7846mm^2=0.13921inch^2$.
+On peut donc sélectionner la soupape E.

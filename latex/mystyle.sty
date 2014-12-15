@@ -4,6 +4,7 @@
 % Includes
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+\RequirePackage{textcomp}
 \RequirePackage[english,frenchb]{babel}
 \RequirePackage{csquotes}
 
@@ -58,6 +59,7 @@
 \frenchbsetup{og=«,fg=»}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \newcommand{\sts}{\hspace{.1em}}
+\newcommand{\quest}[1]{\paragraph{#1}~\\}
 \newcommand{\matlab}{\textsc{Matlab}}
 \newcommand{\aspen}{\textsc{Aspen Plus}}
 
@@ -70,6 +72,7 @@
 \newcommand{\scal}[2]{\left(#1\,\middle|\,#2\right)} % Scalar product
 \newcommand{\dist}{\mathrm{dist}} % Distance function
 \newcommand{\jour}{\mathrm{j}} % Unit symbol for a day in French
+\newcommand{\barg}{\mathrm{barg}} % Unit symbol for pressure relative to 1 bar
 
 % Multiple footnotes with hyperref
 \let\oldFootnote\footnote
