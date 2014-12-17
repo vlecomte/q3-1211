@@ -190,19 +190,22 @@ commençons par présenter nos variables.
 \begin{itemize}
     \item $a$ représente les débits molaires entrant dans le système,
         sans la partie recyclée; en particulier, arrivent dans le système
-        $a$ de \ce{N2}, $3a$ de \ce{H2} et $a/78$ de \ce{Ar} \emph{frais}.
+        des quantités
+        $a$ de \ce{N2}, $3a$ de \ce{H2} et $a/78$ de \ce{Ar}.
     \item $b$ représente les débits molaire recyclé;
-        en particulier, sont recyclés $b$ de \ce{N2} et $3b$ de \ce{H2}.
+        en particulier, sont recyclées 
+        des quantités $b$ de \ce{N2} et $3b$ de \ce{H2}.
         La quantité d'argon n'étant pas dans les mêmes proportions
         qu'à l'entrée, elle n'est pas donnée par la variable $b$.
     \item $c = a+b$ représente les débits molaires
         totaux entrant dans le réacteur;
         en particulier, arrivent dans le réacteur, avec réactifs frais et
-        recyclés combinés
+        recyclés combinés des quantités
         $c$ de \ce{N2} et $3c$ de \ce{H2}.
         À nouveau, la quantité d'argon n'étant pas dans les mêmes proportions,
         elle sera traitée séparément.
-    \item $\epsilon$ représente comme auparavant le degré d'avancement de la réaction;
+    \item $\epsilon$ représente comme auparavant
+        le degré d'avancement de la réaction;
         en particulier, $\epsilon$ de \ce{N2} et $3\epsilon$ de \ce{H2}
         seront transformés en $2\epsilon$ de \ce{NH3}.
     \item $r$ représente la fraction des réactifs séparés
@@ -212,7 +215,39 @@ commençons par présenter nos variables.
 
 \subsubsection{Argon dans le réacteur}
 
-Calculons maintenant la quantit
+Calculons maintenant la quantité d'argon qui entre dans le réacteur.
+Pour rappel, avec le recyclage, l'argon s'accumule dans une certaine mesure,
+qui dépend du rapport de recyclage: si rien n'est recyclé, il n'y a pas
+d'accumulation; si tout est recyclé, l'argon s'accumule indéfiniment;
+et dans les autres cas, il va s'accumuler jusqu'à atteindre un plafond.
+
+Supposons que l'accumulation maximale d'argon est atteinte,
+et donc qu'il est en quantité constante dans le système.
+Puisqu'aucune quantité d'argon ne réagit, il faut,
+selon l'équation~\ref{eq:gen-non-accu}, que le débit d'entrée d'argon soit égal
+à son débit de sortie.
+
+Soit $\dot{n}_\ce{Ar}$ le débit d'argon dans le réacteur.
+Dans le système, par définition, il entre $a/78$ d'argon,
+car le flux recyclé n'est pas une entrée au niveau du système.
+Ce qui sort est la partie purgée, car l'argon ne sort pas par la sortie
+principale avec l'ammoniac. Puisque une fraction $1-r$ du flux restant
+est purgée, une quantité $(1-r)\,\dot{n}_\ce{Ar}$ d'argon sort du système.
+
+Pour que l'argon ne s'accumule pas, il faut donc:
+\begin{equation*}
+    a/78 = (1-r)\,\dot{n}_\ce{Ar}
+\end{equation*}
+ce qui donne:
+\begin{equation}
+    \dot{n}_\ce{Ar} = \frac{a}{78(1-r)}
+\end{equation}
+
+On peut vérifier intuitivement ces résultats en considérant des cas
+particuliers: pour $r=0$ on retombe au cas sans recyclage,
+et le débit d'argon est simplement celui entrant, $a/78$;
+tandis que pour $r=1$ l'expression est une division par zéro,
+car l'argon s'accumule à l'infini.
 
 \section{Modélisation avec \aspen}
 
