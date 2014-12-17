@@ -464,9 +464,10 @@ $\joule\per\mole$ des trois réactions.
 Les degrés d'avancement $\alpha$ et $\beta$ ont été calculées
 au préalable pour la quantité d’ammoniac désirée.
 
-\subsection{Calcul des différentes enthalpies à une température $T$}
+\subsection{Calcul des différentes enthalpies}
 
-Pour calculer les différences d'enthalpie des différents composés,
+Pour calculer les différences d'enthalpie des différents composés
+à une température donnée $T$,
 nous utilisons une des formes de l'équation de Shomate \cite{nist}:
 $$\Delta H(t) = A\,t + B\,\frac{t^2}{2} + C\,\frac{t^3}{3}
 + D\,\frac{t^4}{4} - E\,\frac{1}{t} + F$$
@@ -626,11 +627,13 @@ dans le réacteur de reformage primaire.
 
 \section{Outil de gestion}
 
-L'outil de gestion est fourni sous la forme d'un archive ZIP à côté de ce PDF.
-La fonction à utiliser est \texttt{masses\textunderscore and\textunderscore heat},
-qui prend simplement en paramètre la température en kelvin et le débit
-de \ce{NH3} en \kilogram\per\second.
+L'outil de gestion est fourni dans un dossier \texttt{outil-gr11/}
+à côté de ce pdf.
+Pour le lancer, il suffit de taper \texttt{gestion} dans la commande 
+\matlab{} une fois dans le dossier.
+Il reste ensuite à remplir les champs légendés
+dans la fenêtre qui s'ouvre.
 
-Nous avons développé une ébauche d'interface pour cette fonction,
-mais nous préférons reporter sa publication à un moment du projet où nous aurons
-une meilleure idée des besoins du projet.
+Si au lancement le programme signale une erreur qui indique que la fonction
+\texttt{uiextras} n'existe pas, veuillez télécharger et installer la librairie
+\emph{GUI Layout Toolbox} à l'adresse en \cite{guilayout}.

@@ -1,4 +1,4 @@
-function Gestion()
+function gestion()
 %Gestion is a management tool for ammonia production plant
 %Inspired by Gaetan Cassiers' code.
 
