@@ -33,7 +33,7 @@ Commençons donc par estimer le rendement que nous pourrions obtenir
 sur cette dernière réaction:
 \begin{equation}
     \label{eq:chem-e}
-    \ce{N2 + 3H2 -> 2NH3}
+    \ce{N2 + 3H2 <-> 2NH3}
 \end{equation}
 Jusqu'à présent, dans la tâche 1, nous avions
 considéré cette réaction comme complète.
@@ -62,12 +62,13 @@ et la pression totale, on obtient:
     \ \times\ (p\ind{tot}\,/\,p\ind{ref})^4}
 \end{equation*}
 ou encore:
-\begin{equation*}
+\begin{equation}
+    \label{eq:equi-e}
     K\ind{E} \times (p\ind{tot}\,/\,p\ind{ref})^2
     = \frac{\dot{n}_\ce{NH3}^2\ \dot{n}\ind{tot}^2}
     {\dot{n}_\ce{N2}\ \dot{n}_\ce{H2}^3}
     = K_{\mathrm{E},\,p\indt{tot}}
-\end{equation*}
+\end{equation}
 
 Soient $a$, $3a$ et $a/78$ les débits de \ce{N2}, \ce{H2} et \ce{Ar} entrants,
 et soit $\epsilon$ le degré d'avancement de la réaction
@@ -75,7 +76,7 @@ et soit $\epsilon$ le degré d'avancement de la réaction
 Alors, l'équation s'écrit encore:
 \begin{equation*}
     K_{\mathrm{E},\,p\indt{tot}}
-    = \frac{(2\epsilon)^2\,(4.01a-2\epsilon)^2}
+    = \frac{(2\epsilon)^2\,(4.013a-2\epsilon)^2}
     {(a-\epsilon)\,(3(a-\epsilon))^3}
 \end{equation*}
 
@@ -248,6 +249,75 @@ particuliers: pour $r=0$ on retombe au cas sans recyclage,
 et le débit d'argon est simplement celui entrant, $a/78$;
 tandis que pour $r=1$ l'expression est une division par zéro,
 car l'argon s'accumule à l'infini.
+
+\subsubsection{Expression de la partie fraîche des réactifs}
+
+Nous désirons maintenant obtenir une expression
+pour la partie fraîche $a$ en fonction
+de la quantité de réactifs totale $c$, dans le but de tout exprimer
+selon cette variable plus tard.
+
+Pour ça trouvons d'abord une expression pour $b$.
+Elle est assez simple à trouver. La partie recyclée vaut le débit
+de réactifs sortant du réacteur, multipliée par le rapport de recyclage:
+\begin{equation*}
+    b = r(c-\epsilon)
+\end{equation*}
+
+Ensuite, il suffit de soustraire cette expression à $c$ pour trouver $a$:
+\begin{equation}
+    \label{eq:expr-a}
+    a = c-b = c-r(c-\epsilon) = c(1-r) + r\epsilon
+\end{equation}
+
+\subsubsection{Expression de l'équilibre}
+
+Pour exprimer la relation d'équilibre,
+nous reprenons l'équation~\ref{eq:equi-e}.
+Cette fois, les débits à la sortie de la réaction sont:
+\begin{equation*}
+    \left\{
+    \begin{array}{ccl}
+        \dot{n}_\ce{N2} &=& c-\epsilon \\
+        \dot{n}_\ce{H2} &=& 3c-3\epsilon \\
+        \dot{n}_\ce{Ar} &=& \frac{a}{78(1-r)} \\
+        \dot{n}_\ce{N2} &=& 2\epsilon \\
+        \dot{n}\ind{tot} &=&
+        \dot{n}_\ce{N2}+\dot{n}_\ce{N2}+\dot{n}_\ce{N2}+\dot{n}_\ce{N2}
+        = 4c + \frac{a}{78(1-r)} - 2\epsilon \\
+    \end{array}
+    \right.
+\end{equation*}
+
+En injectant ces résultats dans l'équation, on obtient:
+\begin{equation*}
+    K_{\mathrm{E},\,p\indt{tot}}
+    = \frac{(2\epsilon)^2\,(4c + \frac{a}{78(1-r)} - 2\epsilon)^2}
+    {(c-\epsilon)\,(3(c-\epsilon))^3}
+\end{equation*}
+
+Nommons maintenant $y$ le rapport $\epsilon/c$ de conversion des réactifs;
+cela nous permet de transformer l'équation en:
+\begin{equation*}
+    K_{\mathrm{E},\,p\indt{tot}}
+    = \frac{(2y)^2\,(4 + \frac{a}{78c(1-r)} - 2y)^2}
+    {(1-y)\,(3(1-y))^3}
+\end{equation*}
+
+Remplaçons maintenant $a$ par son expression en~\ref{eq:expr-a}:
+\begin{equation*}
+    K_{\mathrm{E},\,p\indt{tot}}
+    = \frac{(2y)^2\,(4 + \frac{c(1-r) + r\epsilon}{78c(1-r)} - 2y)^2}
+    {(1-y)\,(3(1-y))^3}
+    = \frac{4y^2\,[(4 + \frac{1}{78}) + (\frac{r}{78(1-r)} - 2)y]^2}
+    {27(1-y)^4}
+\end{equation*}
+
+À nouveau, cette équation est facilement résolvable numériquement
+comme la recherche de racines d'un polynôme de degré 4,
+ce qui donne la valeur de $y$ en fonction du paramètre $r$.
+
+[to be continued]
 
 \section{Modélisation avec \aspen}
 
