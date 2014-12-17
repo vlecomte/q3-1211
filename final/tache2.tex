@@ -337,7 +337,24 @@ On obtient donc:
 ce qui nous donne le taux de conversion effectif
 en tenant compte du recyclage.
 On remarque que quand $r=0$, ce taux vaut simplement $y$,
-tandis que quand $r=1$, il vaut 1.
+tandis que quand $r$ tend vers 1, il tend vers 1 aussi.
+
+Sa valeur pour différentes fractions de recyclage est présentée dans
+le tableau~\ref{tab:result-theory}.
+
+\begin{table}
+\centering
+\begin{tabu}{c|ccccccccccc}
+    $r$ & 0.0 & 0.1 & 0.2 & 0.3 & 0.4
+    & 0.5 & 0.6 & 0.7 & 0.8 & 0.9 & 1.0 \\
+    \hline
+    $y\ind{eff}$ & 0.40 & 0.43 & 0.46 & 0.49 & 0.53
+    & 0.57 & 0.63 & 0.69 & 0.77 & 0.87 & N/A \\
+\end{tabu}
+\caption{Le taux de conversion effective tend vers 1 quand le
+rapport de recyclage augmente.}
+\label{tab:result-theory}
+\end{table}
 
 \section{Modélisation avec \aspen}
 
