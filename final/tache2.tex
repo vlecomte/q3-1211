@@ -107,7 +107,7 @@ dans des intervalles réalistes.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{img/param-press2}
+    \includegraphics[width=0.8\textwidth]{img/param-press}
     \caption{
         Taux de conversion de la réaction de synthèse,
         pour $T=750\,\kelvin$.
@@ -124,7 +124,7 @@ Mais nous allons voir que la pression n'a pas une aussi grande influence que la 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{img/param-temp2}
+    \includegraphics[width=0.8\textwidth]{img/param-temp}
     \caption{
         Taux de conversion de la réaction de synthèse,
         pour $p=270\,\bbar$.
@@ -362,6 +362,31 @@ rapport de recyclage augmente.}
 
 \section{Modélisation avec \aspen}
 
+Pour modéliser le processus avec \aspen, nous avons utilisé
+les composants suivants:
+\begin{itemize}
+    \item un compresseur isentropique, pour amener les réactifs à la pression
+        de $270\,\bbar$;
+    \item un préchauffeur, pour amener les réactifs à la température
+        de $750\,\kelvin$;
+    \item un réacteur à l'équilibre, pour simuler les réactions;
+    \item un refroidisseur, pour refroidir les produits sortant du réacteur
+        à la température de $250\,\kelvin$ propice à condenser l'ammoniac;
+    \item une unité flash, pour séparer l'ammoniac du reste;
+    \item et un splitter, pour partager le flux restant en un flux de recyclage
+        et un flux de purge.
+\end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/aspen}
+    \caption{
+        Flow-sheet réalisé sur \aspen.
+    }
+    \label{fig:aspen}
+\end{figure}
+
+La disposition de ces différents éléments et des flux les reliant
+est donnée dans la figure~\ref{fig:aspen}.
 
 \section{Comparaison des résultats}

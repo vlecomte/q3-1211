@@ -18,3 +18,5 @@
 *.lnk
 # Compressed folders
 *.zip
+# GIMP files
+*.xcf
