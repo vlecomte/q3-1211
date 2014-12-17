@@ -1,6 +1,6 @@
 function synthesis_graphs()
 
-th.recycle = linspace(0,0.99,1000);
+th.recycle = linspace(0,0.99);
 [th.cons, th.in_reac] = synthesis_theory(th.recycle);
 [asp.recycle, asp.cons, asp.in_reac] = synthesis_aspen();
 
