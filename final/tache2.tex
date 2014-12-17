@@ -267,7 +267,7 @@ de réactifs sortant du réacteur, multipliée par le rapport de recyclage:
 Ensuite, il suffit de soustraire cette expression à $c$ pour trouver $a$:
 \begin{equation}
     \label{eq:expr-a}
-    a = c-b = c-r(c-\epsilon) = c(1-r) + r\epsilon
+    a = c-b = c-r(c-\epsilon) = c\,(1-r) + r\epsilon
 \end{equation}
 
 \subsubsection{Expression de l'équilibre}
@@ -300,14 +300,14 @@ Nommons maintenant $y$ le rapport $\epsilon/c$ de conversion des réactifs;
 cela nous permet de transformer l'équation en:
 \begin{equation*}
     K_{\mathrm{E},\,p\indt{tot}}
-    = \frac{(2y)^2\,(4 + \frac{a}{78c(1-r)} - 2y)^2}
+    = \frac{(2y)^2\,(4 + \frac{a}{78c\,(1-r)} - 2y)^2}
     {(1-y)\,(3(1-y))^3}
 \end{equation*}
 
 Remplaçons maintenant $a$ par son expression en~\ref{eq:expr-a}:
 \begin{equation*}
     K_{\mathrm{E},\,p\indt{tot}}
-    = \frac{(2y)^2\,(4 + \frac{c(1-r) + r\epsilon}{78c(1-r)} - 2y)^2}
+    = \frac{(2y)^2\,(4 + \frac{c\,(1-r) + r\epsilon}{78c\,(1-r)} - 2y)^2}
     {(1-y)\,(3(1-y))^3}
     = \frac{4y^2\,[(4 + \frac{1}{78}) + (\frac{r}{78(1-r)} - 2)y]^2}
     {27(1-y)^4}
@@ -317,7 +317,27 @@ Remplaçons maintenant $a$ par son expression en~\ref{eq:expr-a}:
 comme la recherche de racines d'un polynôme de degré 4,
 ce qui donne la valeur de $y$ en fonction du paramètre $r$.
 
-[to be continued]
+\subsubsection{Taux de conversion effectif}
+
+Nous avons donc maintenant une valeur pour $\epsilon/c$.
+Toutefois, cette valeur ne tient en compte qu'un cycle du réacteur:
+ce qui est réellement consommé n'est pas $c$, mais bien $a$.
+Dès lors, il faut passer de $y = \epsilon/c$ à $y\ind{eff} = \epsilon/a$.
+
+Pour ce faire, calculons le rapport entre $a$ et $c$
+en réutilisant l'équation~\ref{eq:expr-a}:
+\begin{equation}
+    \frac{a}{c} = \frac{c\,(1-r) + r\epsilon}{c} = (1-r) + ry
+\end{equation}
+
+On obtient donc:
+\begin{equation}
+    y\ind{eff} = y / (a/c) = \frac{y}{(1-r) + ry}
+\end{equation}
+ce qui nous donne le taux de conversion effectif
+en tenant compte du recyclage.
+On remarque que quand $r=0$, ce taux vaut simplement $y$,
+tandis que quand $r=1$, il vaut 1.
 
 \section{Modélisation avec \aspen}
 
