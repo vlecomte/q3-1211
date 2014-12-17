@@ -11,10 +11,12 @@ function [H_basis, S_basis] = shomate_bases()
 % Basis functions of the approximation.
 % H_basis_norm and S_basis_norm are functions of t = T/1000,
 % whereas H_basis and S_basis are functions of T.
-H_basis_norm = @(t) 1000*[t t^2/2 t^3/3 t^4/4 -1/t 1 0]';
+H_basis_norm = @(t) 1000*[t t.^2/2 t.^3/3 t.^4/4 -1./t ...
+    ones(size(t)) zeros(size(t))]';
 H_basis = @(T) H_basis_norm(T/1000);
 
-S_basis_norm = @(t) [log(t) t t^2/2 t^3/3 -1/(2*t^2) 0 1]';
+S_basis_norm = @(t) [log(t) t t.^2/2 t.^3/3 -1./(2*t.^2) ...
+    zeros(size(t)) ones(size(t))]';
 S_basis = @(T) S_basis_norm(T/1000);
 
 end
