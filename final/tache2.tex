@@ -24,7 +24,7 @@ d'améliorer la modélisation en prenant d'autres facteurs en considération.
 
 \section{Approche théorique}
 
-Dans cette sections nous allons étudier le processus de réaction-séparation
+Dans cette section, nous allons étudier le processus de réaction-séparation
 avec \matlab{}, d'abord sans recyclage, puis avec recyclage.
 
 \subsection{Réaction seule}
@@ -117,7 +117,7 @@ dans des intervalles réalistes.
     \label{fig:param-press}
 \end{figure}
 
-Commençons par faire varier la pression entre $200\,\bbar$ à $400\,\bbar$, pour une température constante de $750\,\kelvin$.
+Commençons par faire varier la pression entre $200\,\bbar$ et $400\,\bbar$, pour une température constante de $750\,\kelvin$.
 On peut constater sur la figure~\ref{fig:param-press} que le rendement s'améliore quand la pression augmente. En effet, quand on analyse l'équation chimique de la synthèse d'ammoniac \eqref{eq:chem-e}, il y a moins de moles de gaz dans les produits que dans les réactifs, et donc augmenter la pression aidera la réaction à se déplacer vers les produits.
 
 Mais nous allons voir que la pression n'a pas une aussi grande influence que la température sur la réaction chimique, car le rendement varie seulement d'une dizaine de pourcents en absolu pour une pression variant du simple au double.
@@ -135,7 +135,7 @@ Mais nous allons voir que la pression n'a pas une aussi grande influence que la 
     \label{fig:param-temp}
 \end{figure}
 
-Faisons maintenant varier la température entre $500\,\kelvin$ et $1000\,\kelvin$, pour une pression de $270\,\bbar$,
+Faisons maintenant varier la température entre $500\,\kelvin$ et $1000\,\kelvin$, pour une pression de $270\,\bbar$.
 On peut observer dans la figure~\ref{fig:param-temp} que le rendement diminue quand la température augmente. En effet, comme il s'agit ici d'une réaction exothermique, au plus la température est élevée, au plus la réaction est favorisée vers les réactifs, ce qui diminue notre rendement.
 
 On peut également constater que la température aura une plus grosse influence sur la réaction que la pression. Effectivement, on peut voir sur l'échelle des ordonnées que le rendement varie de plus de $80\%$ en absolu.
@@ -149,7 +149,7 @@ les équilibres chimiques.
 
 En effet, augmenter la pression n'améliore pas sensiblement l'équilibre,
 et cela ajouterait probablement des difficultés techniques, et par conséquent
-des coûts supérieurs. Puisque il nous est difficile d'estimer ces coûts et leur
+des coûts supérieurs. Puisqu'il nous est difficile d'estimer ces coûts et leur
 impact sur le prix de production, nous allons adopter dans nos calculs suivants
 la pression standard qui nous est donnée de $270\,\bbar$.
 
@@ -393,8 +393,8 @@ est donnée dans la figure~\ref{fig:aspen}. Deux remarques sur cette disposition
         et a donc besoin d'être réchauffé avant d'entrer dans le réacteur.
     \item Le flux \textsc{liq-out} liquide sortant du réacteur est juste là pour
         remplir les exigences du programme. Étant donné la température de
-        $750\,\kelvin$ régnant dans dans le réacteur, un fraction tout à fait
-        négligeable des composés présent est sous forme liquide et le flux
+        $750\,\kelvin$ régnant dans le réacteur, une fraction tout à fait
+        négligeable des composés présents est sous forme liquide et le flux
         \textsc{liq-out} est vide pour la précision de la modélisation.
 \end{itemize}
 
@@ -478,7 +478,7 @@ avoir par rapport à la quantité d'ammoniac produite.
 \end{figure}
 
 Les résultats sont présentés dans la figure~\ref{fig:in-reac}.
-On observe que les deux simulations sont de nouveau très proche
+On observe que les deux simulations sont de nouveau très proches
 dans l'ensemble, avec de l'ordre de $1\%$ de différence,
 et elles sont toutes les deux plutôt constantes,
 car la quantité d'ammoniac produite est à peu près proportionnelle aux

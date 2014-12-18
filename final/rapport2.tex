@@ -271,8 +271,8 @@ Ces équations ne sont pas linéaires.
 
 \subsection{Résolution des équations}
 
-La méthode de résolution des équations a été déterminée par le type des équations.
-Pour rappel:
+La méthode de résolution des équations a été déterminée par le type des équations,
+c'est-à-dire:
 \begin{itemize}
     \item les neuf équations de non-accumulation sont linéaires et homogènes;
     \item l'équation qui impose le débit de sortie de \ce{NH3} est linéaire et non-homogène;
@@ -284,7 +284,7 @@ Nous avons décidé dans notre programme de les résoudre dans cet ordre.
 
 \subsubsection{Résolution des équations homogènes}
 
-Pour rappel les équations liées à la non-accumulation des espèces
+Pour rappel, les équations liées à la non-accumulation des espèces
 \eqref{eq:non-accu}
 sont un système de 9 équations pour 12 inconnues,
 avec $12-9=3$ degrés de liberté.
@@ -409,7 +409,7 @@ par l'utilisateur, on a finalement:
     c\ =\ \mbox{production de \ce{NH3}} \ /\ 2
 \end{equation}
 
-Ceci est la première de la fonction \texttt{solve\_equi}
+Ceci est la première étape de la fonction \texttt{solve\_equi}
 dans notre outil de gestion.
 
 \subsubsection{Résolution des relations d'équilibre}
@@ -462,7 +462,7 @@ $$\alpha*\Delta H_1 + \beta*\Delta H_2 + \frac{75}{100}*\xi*\Delta H\ind{four} =
 où $\alpha$, $\beta$ et $\xi$ sont les degrés d'avancement en $\mole\per\jour$,
 et $\Delta H_1$, $\Delta H_2$ et $\Delta H\ind{four}$ les enthalpies molaires en
 $\joule\per\mole$ des trois réactions.
-Les degrés d'avancement $\alpha$ et $\beta$ ont été calculées
+Les degrés d'avancement $\alpha$ et $\beta$ ont été calculés
 au préalable pour la quantité d’ammoniac désirée.
 
 \subsection{Calcul des différentes enthalpies}
@@ -594,7 +594,7 @@ Nous obtenons:
 = 0.0157\,\meter\cubed\per\second
 \end{equation*}
 
-Ensuite, pour connaître le débit molaire en \ce{CH4} et \ce{H20} à l'entrée, nous devons calculer le débit molaire de \ce{NH3} à la sortie
+Ensuite, pour connaître le débit molaire en \ce{CH4} et \ce{H2O} à l'entrée, nous devons calculer le débit molaire de \ce{NH3} à la sortie
 à partir du débit massique $\dot{m} = 1500\,\ton\per\jour = 17.36\,\kilogram\per\second$.
 En divisant ce dernier par la masse molaire de \ce{NH3} ($0.017\kilogram\per\mole$),
 on obtient un débit de:
