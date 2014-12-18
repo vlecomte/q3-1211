@@ -355,8 +355,7 @@ le tableau~\ref{tab:result-theory}.
         $y\ind{eff}$ & 0.40 & 0.43 & 0.46 & 0.49 & 0.53
         & 0.57 & 0.63 & 0.69 & 0.77 & 0.87 & N/A \\
     \end{tabu}
-    \caption{Le taux de conversion effective tend vers 1 quand le
-    rapport de recyclage augmente.}
+    \caption{Taux de conversion effectif calculé avec \matlab{}.}
     \label{tab:result-theory}
 \end{table}
 
@@ -412,8 +411,7 @@ que nous avons indiqué dans le tableau~\ref{tab:result-aspen}
         $y\ind{eff}$ & 0.41 & 0.43 & 0.46 & 0.49 & 0.53
         & 0.58 & 0.63 & 0.69 & 0.77 & 0.87 & N/A \\
     \end{tabu}
-    \caption{Le taux de conversion effective tend vers 1 quand le
-    rapport de recyclage augmente.}
+    \caption{Taux de conversion effectif calculé avec \aspen{}.}
     \label{tab:result-aspen}
 \end{table}
 
@@ -423,6 +421,96 @@ Pour comparer les simulations faites avec \matlab{} et avec \aspen{},
 nous avons étudié deux critères:
 le taux de conversion effectif de la réaction (la quantité d'ammoniac
 produite pour l'azote et l'hydrogène entrant dans le système)
-et le débit à l'intérieur du réacteur pour une certaine quantité d'ammoniac
+et le débit à l'intérieur du réacteur relatif à la quantité d'ammoniac
 produite.
-Nous avons calculé ces deux valeurs pour différents rapports de recyclage.
+Nous les avons calculés pour différents rapports de recyclage.
+
+Ces deux valeurs ont des effets économiques directs:
+le taux de conversion va déterminer la quantité de gaz de synthèse nécessaire,
+et ce gaz de synthèse a un prix lié aux matières premières et aux
+transformations déjà effectuées;
+tandis que le débit à l'intérieur du réacteur va déterminer sa taille,
+et un réacteur plus grand va coûter plus cher à fabriquer et à entretenir.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/yield}
+    \caption{
+        Taux de conversion de la réaction de synthèse,
+        en fonction de la fraction recyclée.
+        En bleu, la simulation sous \matlab{} et en vert,
+        la simulation sous \aspen{}.
+    }
+    \label{fig:yield}
+\end{figure}
+
+\subsubsection{Taux de conversion}
+
+Commençons par les résultats du taux de conversion, présentés dans la
+figure~\ref{fig:yield}.
+Il y a très peu de différences entre les deux simulations,
+qui peuvent être attribuées aux calculs des constantes d'équilibre
+ou aux hypothèses simplificatrices du programme \matlab{}, notamment
+la phase liquide qui a été ignorée pour la plupart du procédé,
+et la séparation considérée comme parfaite.
+On constate comme déja mentionné que le taux de conversion s'approche
+du maximum quand le rapport de recyclage s'approche de 1.
+
+\subsubsection{Débit dans le réacteur}
+
+Étudions maintenant le débit dans le réacteur.
+Nous considérons ici le débit molaire à l'entrée du réacteur
+divisé par le degré d'avancement de la réaction, ce qui donne une valeur
+adimensionnelle.
+Elle est directement proportionnelle au volume que le réacteur devrait
+avoir par rapport à la quantité d'ammoniac produite.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/in-reac}
+    \caption{
+        Débit relatif dans le réacteur de synthèse,
+        en fonction de la fraction recyclée.
+        En bleu, la simulation sous \matlab{} et en vert,
+        la simulation sous \aspen{}.
+    }
+    \label{fig:in-reac}
+\end{figure}
+
+Les résultats sont présentés dans la figure~\ref{fig:in-reac}.
+On observe que les deux simulations sont de nouveau très proche
+dans l'ensemble, avec de l'ordre de $1\%$ de différence,
+et elles sont toutes les deux plutôt constantes,
+car la quantité d'ammoniac produite est à peu près proportionnelle aux
+quantités d'azote et d'hydrogène introduites dans le réacteur.
+Toutefois, les deux courbes se distinguent nettement quand
+le recyclage s'approche de 1.
+
+D'un côté, la simulation de \matlab{} indique un débit qui explose.
+Cela s'explique aisément par la présence de l'argon dans le système,
+qui s'accumule sans limite quand la purge est fermée.
+De l'autre, la simulation d'\aspen{} indique un débit qui augmente légèrement,
+pour arriver à une valeur finie. C'est en fait parce que lorsque
+la purge est réduite de façon importante, l'argon finit par sortir
+principalement par l'unité flash censée isoler uniquement l'ammoniac.
+Dès lors même avec la suppression de la purge, un équilibre est atteint.
+
+\subsubsection{Choix du rapport de recyclage}
+
+Un bon choix de rapport de recyclage maximiserait le taux de conversion
+tout en minimisant le débit relatif dans le réacteur.
+Il faut donc qu'il soit suffisamment haut pour utiliser le gaz de synthèse
+le mieux possible, mais suffisamment bas pour éviter l'accumulation d'argon.
+
+Nous imaginons pour le débit dans le réacteur
+que la réalité se situe quelque part entre les simulations de \matlab{}
+et d'\aspen{}, car le séparateur serait probablement meilleur
+dans le procédé réel.
+Nous choisissons donc un peu arbitrairement un rapport de recyclage de $95\%$,
+qui assure un bon rendement tout en gardant le débit dans le réacteur à un
+niveau pas nettement supérieur au niveau obtenu pour de faibles recyclages.
+Nous pourrions probablement faire mieux si nous disposions d'une estimation
+des effets économiques réels de ces facteurs.
+
+Cette valeur de $95\%$ est la valeur utilisée dans l'outil de gestion
+pour modéliser la synthèse de l'ammoniac.
