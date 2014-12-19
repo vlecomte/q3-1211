@@ -24,7 +24,7 @@ La figure~\ref{fig:flowsheet2} présente le flow-sheet que nous avons complété
 Dans cette section nous allons utiliser ce que nous savons
 sur les réactions pour trouver les différents débits de matière du procédé
 en fonction du débit sortant de \ce{NH3}
-et de la température du réformage primaire.
+et de la température du reformage primaire.
 
 Il suffit a priori de prendre ce débit
 d’ammoniac désiré et remonter pas à pas
@@ -70,7 +70,7 @@ En ce qui concerne les équations, nous pouvons exprimer:
         ce qui est apporté ou produit doit égaler
         ce qui est enlevé ou ce qui réagit;
     \item le débit de sortie de \ce{NH3}, imposé par l'utilisateur;
-    \item les deux relations d'équilibre à la sortie du réacteur de réformage
+    \item les deux relations d'équilibre à la sortie du réacteur de reformage
         primaire.
 \end{itemize}
 
@@ -184,13 +184,13 @@ Il s'agit d'une équation linéaire non-homogène.
 \subsubsection{Relations d'équilibre}
 
 Pour exprimer les relations d'équilibre, nous considérons que la fin
-du réformeur primaire est constamment à l'équilibre.
+du reformeur primaire est constamment à l'équilibre.
 Par conséquent, les relations d'équilibres, qui s'expriment selon
 les rapports de concentration à l'équilibre, peuvent aussi s'exprimer selon
 les rapports des débits sortants.
 
 Pour simplifier les expressions, nous introduisons les variables suivantes,
-qui correspondent aux débits des composés sortant du réformeur primaire.
+qui correspondent aux débits des composés sortant du reformeur primaire.
 \begin{equation}
     \label{eq:def-eq-flows}
     \left\{
@@ -379,7 +379,7 @@ les trois premières colonnes correspondent à
 $\mbox{in}_\ce{CH4}$,
 $\mbox{in}_\ce{H2O}$ et
 $\mbox{in}\ind{air}$;
-les quatres suivantes à
+les quatre suivantes à
 $\mbox{out}_\ce{H2O}$,
 $\mbox{out}_\ce{CO2}$,
 $\mbox{out}_\ce{Ar}$ et
@@ -418,7 +418,7 @@ Il nous reste maintenant à trouver $a$ et $b$,
 en exprimant les deux relations d'équilibre selon ces deux derniers paramètres.
 
 Pour cela, nous exprimons d'abord les débits molaires à la sortie du
-réacteur de réformage
+réacteur de reformage
 $\mbox{éq}_\ce{CH4}$, $\mbox{éq}_\ce{H2O}$, $\mbox{éq}_\ce{H2}$,
 $\mbox{éq}_\ce{CO}$ et $\mbox{éq}_\ce{CO2}$ en fonction de $a$ et de $b$.
 On peut faire ça en injectant les solutions paramétriques
@@ -440,7 +440,7 @@ Une fois ceux-là obtenus, nous pouvons déduire tous
 les débits massiques,
 et les puissances produites ou absorbées par chacune des réactions.
 C'est le rôle de la fonction \texttt{masses\_and\_heat}.
-Elle prend en paramètre la température du réformeur primaire, en kelvins,
+Elle prend en paramètre la température du reformeur primaire, en kelvins,
 et le débit massique de \ce{NH3} à produire, en \kilogram\per\second.%
 \footnote{Ou dans n'importe quelle autre unité de masse par temps.
 Les valeurs retournées seront exprimées dans la même unité. Magique, non?}
