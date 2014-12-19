@@ -33,6 +33,10 @@ label_T = uicontrol('Parent', l_T,'Style','text',...
 
 input_T = uicontrol('Parent', l_T,'Style','edit', 'Callback', @update);
 
+input_ideal_synth = uicontrol('Parent', l_params, 'Style', 'checkbox',...
+    'String','Synthesis reaction is considered complete',...
+    'Callback', @update);
+
 button_go = uicontrol('Parent', l_act, 'Style', 'pushbutton', 'String', 'OK', 'Callback', @update);
 
 
@@ -81,6 +85,7 @@ t_oven_out = uitable('Parent', p_oven_out, 'ColumnName', display_fields,'RowName
 panel_others = uiextras.Panel('Parent', f_layout, 'Title', 'Others');
 l_others = uiextras.VBox('Parent', panel_others);
 nb_pipes = uicontrol('Parent', l_others,'Style','text');
+y_eff = uicontrol('Parent', l_others, 'Style', 'text');
 
 
 %  Initialization tasks
@@ -101,6 +106,9 @@ update();
             errordlg('The temperature must be within the interval [500, 1500]K','Invalid Input','modal');
             return
         end
+        
+        global ideal_synth
+        ideal_synth = get(input_ideal_synth,'value');
         
         [m_reac, m_oven, q_reac] = masses_and_heat(T, m_NH3);
         
@@ -160,8 +168,14 @@ update();
         
       
   
-        set(nb_pipes, 'String', sprintf('Number of pipes at entry of primary reforming : %d',...
+        set(nb_pipes, 'String', sprintf('Number of pipes at entry of primary reforming: %d',...
             number_pipes(T, m_NH3)));
-        
+        if ideal_synth
+            yeff_comp = 1;
+        else
+            yeff_comp = synthesis_theory(0.95);
+        end
+        set(y_eff, 'String', sprintf('Effective conversion rate in synthesis reaction: %.2f',...
+            yeff_comp));
     end
 end

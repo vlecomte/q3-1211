@@ -2,6 +2,14 @@
 % parametric form.
 function [n] = param_moles()
 
+global ideal_synth
+if ideal_synth
+    c = 1;
+else
+    % Taking into account a 95% recycle ratio in the synthesis reactor.
+    c = 1 / synthesis_theory(0.95);
+end
+
 % A describes the system in terms of the mole flow rates:
 %   - in1, in2, in3: the inputs of CH4, H2O and air;
 %   - out1, out2, out3, out4: the outputs of H2O, CO2, Ar and NH3;
@@ -14,15 +22,15 @@ function [n] = param_moles()
 A = [
 %  in  in  in  out out out out  alpha   gamma  epsilon
 % CH4 H2O air  H2O CO2  Ar NH3    . beta  . delta .
-    1   0   0,   0   0   0   0,  -1   0  -2   0   0; % CH4
-    0   1   0,  -1   0   0   0,  -1  -1   0  -1   0; % H2O
-    0   0   0,   0   0   0   0,   3   1   4   1  -3; % H2
-    0   0   0,   0   0   0   0,   1  -1   2  -1   0; % CO
-    0   0   0,   0  -1   0   0,   0   1   0   1   0; % CO2
-    0   0 .21,   0   0   0   0,   0   0  -1   0   0; % O2
-    0   0 .78,   0   0   0   0,   0   0   0   0  -1; % N2
-    0   0 .01,   0   0  -1   0,   0   0   0   0   0; % Ar
-    0   0   0,   0   0   0  -1,   0   0   0   0   2; % NH3
+    1   0   0,   0   0   0   0,  -1   0  -2   0   0  ; % CH4
+    0   1   0,  -1   0   0   0,  -1  -1   0  -1   0  ; % H2O
+    0   0   0,   0   0   0   0,   3   1   4   1  -3*c; % H2
+    0   0   0,   0   0   0   0,   1  -1   2  -1   0  ; % CO
+    0   0   0,   0  -1   0   0,   0   1   0   1   0  ; % CO2
+    0   0 .21,   0   0   0   0,   0   0  -1   0   0  ; % O2
+    0   0 .78,   0   0   0   0,   0   0   0   0  -1*c; % N2
+    0   0 .01,   0   0  -1   0,   0   0   0   0   0  ; % Ar
+    0   0   0,   0   0   0  -1,   0   0   0   0   2  ; % NH3
 ];
 
 % Solves the above homogeneous system of equations.

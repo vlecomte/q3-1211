@@ -1,25 +1,11 @@
-function [recycle, cons, in_reac] = synthesis_aspen()
+% Synthesis simulation with ASPEN PLUS
+% yield_eff and in_reac are the conversion rate and the relative flow
+% rate entering the reactor
+function [recycle, yield_eff, in_reac] = synthesis_aspen()
 
 % For 1 mol/s N2, 3 mol/s H2 and 1/78 mol/s Ar input.
 % So 3.6 kmol/hr N2, 10.8 kmol/hr H2 and 0.0462 kmol/hr Ar input.
 
-% SR-POLAR
-% Recycle split fraction
-% recycle = [
-%     0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 ...
-%     0.8 0.9
-% ];
-% Ammonia, kmol/hr
-% amm = [
-%     2.92623 3.10991 3.35235 3.55639 3.87111 4.15262 4.53258 4.98911 ...
-%     5.54835 6.24910
-% ];
-% Reactor mole flow in, kmol/hr
-% in_reac_abs = [
-%     14.4462 15.3411 16.3568 17.5198 18.8650 20.4395 22.3093 24.5706 ...
-%     27.3784 31.0385
-% ];
-%
 % RK-SOAVE
 % Recycle split fraction
 recycle = [
@@ -40,9 +26,8 @@ in_reac_abs = [
     34.1233 34.6457 35.1924
 ];
 
-xi = amm / 2;
-yield = xi / 3.6;
-cons = 1 ./ yield;
-in_reac = in_reac_abs ./ xi;
+epsilon = amm / 2;
+yield_eff = epsilon / 3.6;
+in_reac = in_reac_abs ./ epsilon;
 
 end

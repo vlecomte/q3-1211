@@ -1,3 +1,5 @@
+% Calculations for the number of pipes at the entry of the primary
+% reformer.
 function [pipes]=number_pipes(T, m_nh3)
 
 c=2;

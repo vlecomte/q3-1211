@@ -1,4 +1,7 @@
-function [cons, in_reac] = synthesis_theory(recycle)
+% Synthesis simulation with MATLAB
+% yield_eff and in_reac are the conversion rate and the relative flow
+% rate entering the reactor
+function [yield_eff, in_reac] = synthesis_theory(recycle)
 
 [H_basis, S_basis] = shomate_bases();
 c = shomate_coeffs();
@@ -28,8 +31,7 @@ for i = 1:length(yield)
 end
 
 ratio_fresh = 1 - recycle.*(1-yield);
-yield_with_recycle = yield ./ ratio_fresh;
-cons = 1 ./ yield_with_recycle;
+yield_eff = yield ./ ratio_fresh;
 in_reac = moles_ind ./ yield + in_moles_y;
 
 end

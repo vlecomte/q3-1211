@@ -3,14 +3,12 @@ c = shomate_coeffs();
 
 dc = 2*c.nh3 - c.n2 - 3*c.h2_low;
 
-recycle = 0;
-
-%T = 750;
+% T = 750;
 T = linspace(500,1000);
 R = 8.3144621;
 pref = 1e5;
 p = 270e5;
-%p = linspace(200e5,400e5);
+% p = linspace(200e5,400e5);
 
 dH = dc * H_basis(T');
 dS = dc * S_basis(T');
@@ -19,8 +17,6 @@ K = exp(-(dH-T.*dS)./(R*T));
 Kp = K * (p/pref).^2;
 
 moles_ind = 4 + 1/78;
-in_moles_y = recycle./(78*(1-recycle));
-out_moles_y = in_moles_y - 2;
 
 yield = zeros(size(Kp));
 for i = 1:length(yield)
@@ -32,8 +28,8 @@ end
 figure; hold on;
 box on;
 grid on;
-%xlabel('Pression (bar)');
+% xlabel('Pression (bar)');
 xlabel('Temperature (K)');
 ylabel('Taux de conversion');
-%plot(p/1e5, yield);
+% plot(p/1e5, yield);
 plot(T, yield);
